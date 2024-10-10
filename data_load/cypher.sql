@@ -65,3 +65,28 @@ ON CREATE SET
     use.RC_M12_AGE_50_CUS_CNT_RAT = toFloat(row.RC_M12_AGE_50_CUS_CNT_RAT),
     use.RC_M12_AGE_OVR_60_CUS_CNT_RAT = toFloat(row.RC_M12_AGE_OVR_60_CUS_CNT_RAT)
 } IN TRANSACTIONS OF 1000 ROWS
+
+
+// Create a unique constraint and index on the pk property of STORE nodes
+CREATE CONSTRAINT store_pk_constraint IF NOT EXISTS
+FOR (store:STORE)
+REQUIRE store.pk IS UNIQUE;
+
+
+// google review data Load JSON data using APOC
+CALL apoc.load.json('file:///google_crawling.json') YIELD value
+UNWIND keys(value) AS storeId
+WITH storeId, value[storeId] AS storeData
+MATCH (s:STORE {pk: toInteger(storeId)})
+SET s.name = storeData.search_result_nm,
+    s.rating = storeData.rating,
+    s.rating_count = storeData.rating_count,
+    s.image_url = storeData.image_url
+
+WITH s, storeData, storeId
+UNWIND keys(storeData.review) AS reviewKey
+WITH s, reviewKey,storeId,storeData.review[reviewKey] AS reviewData
+MERGE (r:Review {id: reviewKey, storePk: toInteger(storeId)})
+SET r.text = reviewData.review,
+    r.user_id = reviewData.user_id
+MERGE (s)-[:HAS_REVIEW]->(r);
