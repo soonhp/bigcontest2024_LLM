@@ -111,3 +111,35 @@ CALL apoc.periodic.iterate(
     ',
     {batchSize: 1000, parallel: true}
 );
+
+// 관광지 ATTR 노드 생성
+LOAD CSV WITH HEADERS FROM "file:///old_addr_real_final.csv" AS row
+MERGE (a:ATTR {pk: row.pk})
+SET a.name = row.AREA_NM,
+    a.old_addr = row.Old_ADDR
+RETURN COUNT(*);
+
+// Create a unique constraint and index on the pk property of ATTR nodes
+CREATE CONSTRAINT attr_pk_constraint IF NOT EXISTS
+FOR (a:ATTR)
+REQUIRE a.pk IS UNIQUE;
+
+// 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 ATTR(관광지) 노드 연결
+MATCH (t:ATTR)
+WHERE t.old_addr IS NOT NULL
+WITH t, split(t.old_addr, " ") AS addrParts
+WHERE size(addrParts) > 2
+WITH t, addrParts[1] AS city, addrParts[2] AS region
+
+// 시(city) 노드를 생성 또는 병합 
+MERGE (c:City {name: city})
+
+// 'subregion'이 '동', '읍', '리' 중 하나를 포함하는 경우 하위 노드 생성 (예: '대정읍')
+WITH t, c, region
+WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리"
+MERGE (r:Region {name: region})
+MERGE (c)-[:HAS_REGION]->(r)
+
+// 관광지 노드를 하위 노드와 연결
+MERGE (r)-[:HAS_ATTR]->(t);
+
