@@ -90,3 +90,24 @@ MERGE (r:Review {id: reviewKey, storePk: toInteger(storeId)})
 SET r.text = reviewData.review,
     r.user_id = reviewData.user_id
 MERGE (s)-[:HAS_REVIEW]->(r);
+
+
+// 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 STORE 노드 연결
+CALL apoc.periodic.iterate(
+    'MATCH (s:STORE) WHERE s.ADDR IS NOT NULL RETURN s, split(s.ADDR, " ") AS addrParts',
+    '
+    WITH s, addrParts
+    WHERE size(addrParts) > 2
+    WITH s, addrParts[1] AS city, addrParts[2] AS region
+
+    MERGE (c:City {name: city})
+
+    WITH s, c, region
+    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리"
+    MERGE (r:Region {name: region})
+    MERGE (c)-[:HAS_REGION]->(r)
+
+    MERGE (r)-[:HAS_STORE]->(s)
+    ',
+    {batchSize: 1000, parallel: true}
+);
