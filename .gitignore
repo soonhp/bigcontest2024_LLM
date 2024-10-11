@@ -1,0 +1,5 @@
+.env
+llm_response/__pycache__/*
+/.ipynb_checkpoints
+graphrag.ipynb
+make_unique_mct.ipynb
