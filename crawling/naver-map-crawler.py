@@ -168,7 +168,11 @@ def get_reviews(driver):
     more_button_xpath = '//*[@id="app-root"]/div/div/div/div[6]/div[2]/div[3]/div[2]/div/a/span'
     
     while len(reviews) < 100:
-        more_button = driver.find_element(By.XPATH, more_button_xpath)
+        try:
+            more_button = driver.find_element(By.XPATH, more_button_xpath)
+        except NoSuchElementException:
+            print("더보기 버튼을 찾을 수 없습니다.")
+            break
         driver.execute_script("arguments[0].click();", more_button)
         time.sleep(random.uniform(1, 3))
         
@@ -232,6 +236,8 @@ def main():
         
         driver = setup_driver()
         try:
+            start_time = time.time()  # 데이터 수집 시작 시간
+            
             store_id = get_store_id(driver, url)
             if store_id is None:
                 # 스토어 ID를 가져오지 못한 경우 "제주" + MCT_NM을 사용하여 다시 검색
@@ -261,6 +267,12 @@ def main():
             # 각 키워드 처리 후 결과 저장
             with open('../data/naver-map-results.json', 'w', encoding='utf-8') as f:
                 json.dump(results, f, ensure_ascii=False, indent=4, default=lambda x: list(x) if isinstance(x, set) else x)
+            
+            end_time = time.time()  # 데이터 수집 종료 시간
+            elapsed_time = end_time - start_time  # 소요 시간 계산
+            
+            # 데이터 저장 후 확인 메시지 및 총 리뷰 개수 출력
+            print(f"{mct_nm}의 데이터가 저장되었습니다. 총 리뷰 개수: {len(review_data['review'])}, 소요 시간: {elapsed_time:.2f}초")
             
         finally:
             driver.quit()
