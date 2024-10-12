@@ -135,25 +135,33 @@ def get_image_url(driver):
         return None  # 이미지 URL을 찾지 못한 경우 None 반환
 
 def get_coordinates(driver):
-    find_way_element = driver.find_element(By.CSS_SELECTOR, 'a[href*="longitude"][href*="latitude"]')
-    href = find_way_element.get_attribute('href')
-    
-    longitude = re.search(r'longitude%5E([\d.]+)', href).group(1)
-    latitude = re.search(r'latitude%5E([\d.]+)', href).group(1)
+    try:
+        find_way_element = driver.find_element(By.CSS_SELECTOR, 'a[href*="longitude"][href*="latitude"]')
+        href = find_way_element.get_attribute('href')
+        
+        longitude = re.search(r'longitude%5E([\d.]+)', href).group(1)
+        latitude = re.search(r'latitude%5E([\d.]+)', href).group(1)
 
-    return {
-        "lat": float(latitude),
-        "lng": float(longitude)
-    }
+        return {
+            "lat": float(latitude),
+            "lng": float(longitude)
+        }
+    except NoSuchElementException:
+        print("위치 정보 요소를 찾을 수 없습니다.")
+        return None  # 위치 정보 요소를 찾지 못한 경우 None 반환
 
 def get_rating_info(driver):
-    rating_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM.fNnpD em')
-    rating = float(rating_element.text)
+    try:
+        rating_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM.fNnpD em')
+        rating = float(rating_element.text)
 
-    rating_count_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM:nth-child(2)')
-    rating_count = int(rating_count_element.text.split('개')[0].replace(',', ''))
+        rating_count_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM:nth-child(2)')
+        rating_count = int(rating_count_element.text.split('개')[0].replace(',', ''))
 
-    return rating, rating_count
+        return rating, rating_count
+    except NoSuchElementException:
+        print("평점 정보 요소를 찾을 수 없습니다.")
+        return None, None  # 평점 정보 요소를 찾지 못한 경우 None 반환
         
 def get_reviews(driver):
     reviews = []
@@ -193,7 +201,7 @@ def main():
     df = pd.read_csv('../data/unique_mct_cleaned.csv')
 
     # MCT_NM에서 수식어 제거
-    df['MCT_NM'] = df['MCT_NM'].apply(lambda x: re.sub(r'\s*[(주)(사)(유)(德)(제주)]\s*', '', x).lstrip())
+    df['MCT_NM'] = df['MCT_NM'].apply(lambda x: x.replace('(주)', '').replace('(사)', '').replace('(유)', '').replace('(德)', '').strip())
 
     # 키워드 리스트 생성
     keywords = []
