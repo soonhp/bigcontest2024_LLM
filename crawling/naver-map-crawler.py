@@ -26,7 +26,12 @@ def setup_driver():
     chrome_options.add_experimental_option('useAutomationExtension', False)
     
     service = Service(executable_path="../chromedriver-linux64/chromedriver")
-    return webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
+    
+    # 브라우저가 완전히 로드될 때까지 기다림
+    time.sleep(0.5)  # 브라우저 로드 시간을 고려하여 적절한 시간을 설정
+    
+    return driver
 
 def get_store_id(driver, url):
     driver.get(url)
@@ -45,7 +50,7 @@ def get_store_id(driver, url):
 def crawl_menu(driver, store_id):
     store_url = f"https://m.place.naver.com/restaurant/{store_id}/menu/list"
     driver.get(store_url)
-    time.sleep(random.uniform(0.5, 1.5))
+    time.sleep(random.uniform(1, 3))
     
     menu_sections = driver.find_elements(By.XPATH, '//*[@id="app-root"]/div/div/div/div[6]/div/div[@class="place_section gkWf3"]')
     
@@ -102,7 +107,7 @@ def crawl_menu_without_sections(driver):
 def crawl_review(driver, store_id):
     store_url = f"https://m.place.naver.com/restaurant/{store_id}/review/visitor?reviewSort=recent"
     driver.get(store_url)
-    time.sleep(2)
+    time.sleep(random.uniform(1, 3))
 
     result = {"unique_id": store_id}
 
@@ -120,60 +125,38 @@ def crawl_review(driver, store_id):
     return result
 
 def get_image_url(driver):
-    try:
-        image_element = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'img.K0PDV._div'))
-        )
-        return image_element.get_attribute('src')
-    except (NoSuchElementException, TimeoutException):
-        return None
+    image_element = driver.find_element(By.CSS_SELECTOR, 'img.K0PDV._div')
+    return image_element.get_attribute('src')
 
 def get_coordinates(driver):
-    try:
-        find_way_element = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'a[href*="longitude"][href*="latitude"]'))
-        )
-        href = find_way_element.get_attribute('href')
-        
-        longitude = re.search(r'longitude%5E([\d.]+)', href).group(1)
-        latitude = re.search(r'latitude%5E([\d.]+)', href).group(1)
+    find_way_element = driver.find_element(By.CSS_SELECTOR, 'a[href*="longitude"][href*="latitude"]')
+    href = find_way_element.get_attribute('href')
+    
+    longitude = re.search(r'longitude%5E([\d.]+)', href).group(1)
+    latitude = re.search(r'latitude%5E([\d.]+)', href).group(1)
 
-        return {
-            "lat": float(latitude),
-            "lng": float(longitude)
-        }
-    except (NoSuchElementException, TimeoutException):
-        return None
+    return {
+        "lat": float(latitude),
+        "lng": float(longitude)
+    }
 
 def get_rating_info(driver):
-    try:
-        rating_element = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.vWSFS span.xobxM.fNnpD em'))
-        )
-        rating = float(rating_element.text)
+    rating_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM.fNnpD em')
+    rating = float(rating_element.text)
 
-        rating_count_element = WebDriverWait(driver, 5).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, 'div.vWSFS span.xobxM:nth-child(2)'))
-        )
-        rating_count = int(rating_count_element.text.split('개')[0].replace(',', ''))
+    rating_count_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM:nth-child(2)')
+    rating_count = int(rating_count_element.text.split('개')[0].replace(',', ''))
 
-        return rating, rating_count
-    except (NoSuchElementException, TimeoutException, ValueError):
-        return None, None
+    return rating, rating_count
         
 def get_reviews(driver):
     reviews = []
     more_button_xpath = '//*[@id="app-root"]/div/div/div/div[6]/div[2]/div[3]/div[2]/div/a/span'
     
     while len(reviews) < 100:
-        try:
-            more_button = WebDriverWait(driver, 5).until(
-                EC.element_to_be_clickable((By.XPATH, more_button_xpath))
-            )
-            driver.execute_script("arguments[0].click();", more_button)
-            time.sleep(2)
-        except (NoSuchElementException, TimeoutException):
-            break
+        more_button = driver.find_element(By.XPATH, more_button_xpath)
+        driver.execute_script("arguments[0].click();", more_button)
+        time.sleep(random.uniform(1, 3))
         
         reviews = driver.find_elements(By.XPATH, '//*[@id="app-root"]/div/div/div/div[6]/div[2]/div[3]/div[1]/ul/li')
     
@@ -215,7 +198,7 @@ def main():
 
     # 기존 결과 파일이 있다면 로드
     try:
-        with open('../data/results.json', 'r', encoding='utf-8') as f:
+        with open('../data/naver-map-results.json', 'r', encoding='utf-8') as f:
             results = json.load(f)
     except FileNotFoundError:
         pass
@@ -234,8 +217,18 @@ def main():
         try:
             store_id = get_store_id(driver, url)
             if store_id is None:
-                print("스토어 ID를 가져오지 못했습니다. 다음 가게로 넘어갑니다.")
-                continue
+                # 스토어 ID를 가져오지 못한 경우 MCT_NM만을 사용하여 다시 검색
+                mct_nm_encoded = urllib.parse.quote(mct_nm)
+                mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={mct_nm_encoded}"
+                store_id = get_store_id(driver, mct_nm_url)
+                if store_id is None:
+                    # 스토어 ID를 가져오지 못한 경우 "제주" + MCT_NM을 사용하여 다시 검색
+                    jeju_mct_nm_encoded = urllib.parse.quote("제주 " + mct_nm)
+                    jeju_mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={jeju_mct_nm_encoded}"
+                    store_id = get_store_id(driver, jeju_mct_nm_url)
+                    if store_id is None:
+                        print("스토어 ID를 가져오지 못했습니다. 다음 가게로 넘어갑니다.")
+                        continue
             
             review_data = crawl_review(driver, store_id)
             menu_data = crawl_menu(driver, store_id)
@@ -249,7 +242,7 @@ def main():
             }
             
             # 각 키워드 처리 후 결과 저장
-            with open('../data/results.json', 'w', encoding='utf-8') as f:
+            with open('../data/naver-map-results.json', 'w', encoding='utf-8') as f:
                 json.dump(results, f, ensure_ascii=False, indent=4, default=lambda x: list(x) if isinstance(x, set) else x)
             
         finally:
