@@ -131,7 +131,7 @@ def get_image_url(driver):
         image_element = driver.find_element(By.CSS_SELECTOR, 'img.K0PDV._div')
         return image_element.get_attribute('src')
     except NoSuchElementException:
-        print("이미지 요소를 찾을 수 없습��다.")
+        print("이미지 요소를 찾을 수 없습니다.")
         return None  # 이미지 URL을 찾지 못한 경우 None 반환
 
 def get_coordinates(driver):
@@ -192,6 +192,9 @@ def main():
     # CSV 파일 읽기
     df = pd.read_csv('../data/unique_mct_cleaned.csv')
 
+    # MCT_NM에서 수식어 제거
+    df['MCT_NM'] = df['MCT_NM'].apply(lambda x: re.sub(r'\s*[(주)(사)(유)(德)(제주)]\s*', '', x).lstrip())
+
     # 키워드 리스트 생성
     keywords = []
     for _, row in df.iterrows():
@@ -223,24 +226,21 @@ def main():
         try:
             store_id = get_store_id(driver, url)
             if store_id is None:
-                # 스토어 ID를 가져오지 못한 경우 MCT_NM만을 사용하여 다시 검색
-                mct_nm_encoded = urllib.parse.quote(mct_nm)
-                mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={mct_nm_encoded}"
-                store_id = get_store_id(driver, mct_nm_url)
+                # 스토어 ID를 가져오지 못한 경우 "제주" + MCT_NM을 사용하여 다시 검색
+                jeju_mct_nm_encoded = urllib.parse.quote("제주 " + mct_nm)
+                jeju_mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={jeju_mct_nm_encoded}"
+                store_id = get_store_id(driver, jeju_mct_nm_url)
                 if store_id is None:
-                    # 스토어 ID를 가져오지 못한 경우 "제주" + MCT_NM을 사용하여 다시 검색
-                    jeju_mct_nm_encoded = urllib.parse.quote("제주 " + mct_nm)
-                    jeju_mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={jeju_mct_nm_encoded}"
-                    store_id = get_store_id(driver, jeju_mct_nm_url)
+                    # 스토어 ID를 가져오지 못한 경우 MCT_NM만을 사용하여 다시 검색
+                    mct_nm_encoded = urllib.parse.quote(mct_nm)
+                    mct_nm_url = f"https://m.map.naver.com/search2/search.naver?query={mct_nm_encoded}"
+                    store_id = get_store_id(driver, mct_nm_url)
                     if store_id is None:
                         print("스토어 ID를 가져오지 못했습니다. 다음 가게로 넘어갑니다.")
                         continue
             
             review_data = crawl_review(driver, store_id)
             menu_data = crawl_menu(driver, store_id)
-            
-            # MCT_NM에서 수식어 제거
-            mct_nm = re.sub(r'\s*[(주)(사)]\s*', '', mct_nm)
             
             results[str(pk)] = {
                 "MCT_NM": mct_nm,
