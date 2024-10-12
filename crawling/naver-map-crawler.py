@@ -25,7 +25,7 @@ def setup_driver():
     chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
     chrome_options.add_experimental_option('useAutomationExtension', False)
     
-    service = Service(executable_path="/media/jys/ssd/workspace/003_Competition/006_KAIT-2024-Big-Contest/chromedriver-linux64/chromedriver")
+    service = Service(executable_path="../chromedriver-linux64/chromedriver")
     return webdriver.Chrome(service=service, options=chrome_options)
 
 def get_store_id(driver, url):
@@ -201,7 +201,7 @@ def parse_review(review):
 
 def main():
     # CSV 파일 읽기
-    df = pd.read_csv('/media/jys/ssd/workspace/003_Competition/006_KAIT-2024-Big-Contest/unique_mct_cleaned.csv')
+    df = pd.read_csv('../data/unique_mct_cleaned.csv')
 
     # 키워드 리스트 생성
     keywords = []
@@ -215,7 +215,7 @@ def main():
 
     # 기존 결과 파일이 있다면 로드
     try:
-        with open('/media/jys/ssd/workspace/003_Competition/006_KAIT-2024-Big-Contest/results.json', 'r', encoding='utf-8') as f:
+        with open('../data/results.json', 'r', encoding='utf-8') as f:
             results = json.load(f)
     except FileNotFoundError:
         pass
@@ -249,7 +249,7 @@ def main():
             }
             
             # 각 키워드 처리 후 결과 저장
-            with open('/media/jys/ssd/workspace/003_Competition/006_KAIT-2024-Big-Contest/results.json', 'w', encoding='utf-8') as f:
+            with open('../data/results.json', 'w', encoding='utf-8') as f:
                 json.dump(results, f, ensure_ascii=False, indent=4, default=lambda x: list(x) if isinstance(x, set) else x)
             
         finally:
