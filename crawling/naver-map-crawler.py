@@ -125,8 +125,14 @@ def crawl_review(driver, store_id):
     return result
 
 def get_image_url(driver):
-    image_element = driver.find_element(By.CSS_SELECTOR, 'img.K0PDV._div')
-    return image_element.get_attribute('src')
+    try:
+        # 이미지 요소를 찾기 전에 잠시 대기
+        time.sleep(1)  # 페이지 로드 대기 시간 추가
+        image_element = driver.find_element(By.CSS_SELECTOR, 'img.K0PDV._div')
+        return image_element.get_attribute('src')
+    except NoSuchElementException:
+        print("이미지 요소를 찾을 수 없습��다.")
+        return None  # 이미지 URL을 찾지 못한 경우 None 반환
 
 def get_coordinates(driver):
     find_way_element = driver.find_element(By.CSS_SELECTOR, 'a[href*="longitude"][href*="latitude"]')
@@ -232,6 +238,9 @@ def main():
             
             review_data = crawl_review(driver, store_id)
             menu_data = crawl_menu(driver, store_id)
+            
+            # MCT_NM에서 수식어 제거
+            mct_nm = re.sub(r'\s*[(주)(사)]\s*', '', mct_nm)
             
             results[str(pk)] = {
                 "MCT_NM": mct_nm,
