@@ -3,3 +3,4 @@ llm_response/__pycache__/*
 /.ipynb_checkpoints
 graphrag.ipynb
 make_unique_mct.ipynb
+crawling/naver-map-results.json
