@@ -19,3 +19,8 @@
 
 - 카카오맵
 시설정보
+
+# Streamlit
+```
+streamlit run app.py
+```
