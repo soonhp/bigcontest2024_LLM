@@ -1,3 +1,5 @@
+from sentence_transformers import SentenceTransformer
+
 from neo4j import GraphDatabase
 from transformers import AutoTokenizer, AutoModel
 import torch
@@ -14,22 +16,13 @@ password = os.environ["NEO4J_PASSWORD"]
 # Initialize the Neo4j driver
 driver = GraphDatabase.driver(uri, auth=(username, password))
 
-# Load BGE-M3-Korean model
-tokenizer = AutoTokenizer.from_pretrained("upskyy/bge-m3-korean")
-model = AutoModel.from_pretrained("upskyy/bge-m3-korean")
-
-# Define mean pooling function
-def mean_pooling(model_output, attention_mask):
-    token_embeddings = model_output[0]
-    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()
-    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)
+# Download from the 🤗 Hub
+model = SentenceTransformer("upskyy/bge-m3-korean")
 
 # Function to get embeddings for a given text
 def get_embedding(text):
-    encoded_input = tokenizer(text, padding=True, truncation=True, return_tensors="pt")
-    with torch.no_grad():
-        model_output = model(**encoded_input)
-    return mean_pooling(model_output, encoded_input["attention_mask"]).squeeze().tolist()
+    text_embeddings = model.encode.squeeze().tolist()
+    return text_embeddings
 
 # Function to update embeddings in Neo4j
 def update_review_embeddings():
