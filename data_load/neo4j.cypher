@@ -145,3 +145,27 @@ CALL apoc.periodic.iterate(
     {batchSize: 1000, parallel: true}
 );
 
+# review data Load JSON data using APOC -> 최적화
+CALL apoc.periodic.iterate(
+  'CALL apoc.load.json("file:///google_crawling.json") YIELD value 
+   UNWIND keys(value) AS storeId 
+   RETURN storeId, value[storeId] AS storeData',
+   
+  'MATCH (s:STORE {pk: toInteger(storeId)})
+   SET s.name = storeData.search_result_nm,
+       s.rating_google = storeData.rating,
+       s.rating_count_google = storeData.rating_count,
+       s.image_url_google = storeData.image_url
+
+   WITH s, storeData, storeId
+   UNWIND keys(storeData.review) AS reviewKey
+   WITH s, reviewKey, storeId, storeData.review[reviewKey] AS reviewData
+   MERGE (r:Review {id: reviewKey, source:"Google", storePk: toInteger(storeId)})
+   SET r:Google,
+       r.text = reviewData.review,
+       r.user_id = reviewData.user_id
+   MERGE (s)-[:HAS_REVIEW]->(r)',
+   
+  {batchSize: 10000, parallel: true}
+);
+
