@@ -13,7 +13,7 @@ from langchain.prompts.chat import (
     HumanMessagePromptTemplate,
 )
 from langchain_community.vectorstores.neo4j_vector import Neo4jVector
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.runnables import RunnablePassthrough
 
 from retry import retry
@@ -121,7 +121,6 @@ def get_neo4j_vector(index_name='queryVector'):
     return neo4jvector
 
 store_retriever = get_neo4j_vector().as_retriever(search_kwargs={"k": 5})
-
 
 
 

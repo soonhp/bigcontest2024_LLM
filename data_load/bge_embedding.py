@@ -21,7 +21,7 @@ model = SentenceTransformer("upskyy/bge-m3-korean")
 
 # Function to get embeddings for a given text
 def get_embedding(text):
-    text_embeddings = model.encode.squeeze().tolist()
+    text_embeddings = model.encode(text).squeeze().tolist()
     return text_embeddings
 
 # Function to update embeddings in Neo4j

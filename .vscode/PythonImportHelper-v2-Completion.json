@@ -1,0 +1,1201 @@
+[
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "urllib.parse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "urllib.parse",
+        "description": "urllib.parse",
+        "detail": "urllib.parse",
+        "documentation": {}
+    },
+    {
+        "label": "webdriver",
+        "importPath": "selenium",
+        "description": "selenium",
+        "isExtraImport": true,
+        "detail": "selenium",
+        "documentation": {}
+    },
+    {
+        "label": "Service",
+        "importPath": "selenium.webdriver.chrome.service",
+        "description": "selenium.webdriver.chrome.service",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.service",
+        "documentation": {}
+    },
+    {
+        "label": "Options",
+        "importPath": "selenium.webdriver.chrome.options",
+        "description": "selenium.webdriver.chrome.options",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.chrome.options",
+        "documentation": {}
+    },
+    {
+        "label": "By",
+        "importPath": "selenium.webdriver.common.by",
+        "description": "selenium.webdriver.common.by",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.common.by",
+        "documentation": {}
+    },
+    {
+        "label": "WebDriverWait",
+        "importPath": "selenium.webdriver.support.ui",
+        "description": "selenium.webdriver.support.ui",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support.ui",
+        "documentation": {}
+    },
+    {
+        "label": "expected_conditions",
+        "importPath": "selenium.webdriver.support",
+        "description": "selenium.webdriver.support",
+        "isExtraImport": true,
+        "detail": "selenium.webdriver.support",
+        "documentation": {}
+    },
+    {
+        "label": "NoSuchElementException",
+        "importPath": "selenium.common.exceptions",
+        "description": "selenium.common.exceptions",
+        "isExtraImport": true,
+        "detail": "selenium.common.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "TimeoutException",
+        "importPath": "selenium.common.exceptions",
+        "description": "selenium.common.exceptions",
+        "isExtraImport": true,
+        "detail": "selenium.common.exceptions",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "loads",
+        "importPath": "json",
+        "description": "json",
+        "isExtraImport": true,
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "loads",
+        "importPath": "json",
+        "description": "json",
+        "isExtraImport": true,
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "ThreadPoolExecutor",
+        "importPath": "concurrent.futures",
+        "description": "concurrent.futures",
+        "isExtraImport": true,
+        "detail": "concurrent.futures",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "SentenceTransformer",
+        "importPath": "sentence_transformers",
+        "description": "sentence_transformers",
+        "isExtraImport": true,
+        "detail": "sentence_transformers",
+        "documentation": {}
+    },
+    {
+        "label": "GraphDatabase",
+        "importPath": "neo4j",
+        "description": "neo4j",
+        "isExtraImport": true,
+        "detail": "neo4j",
+        "documentation": {}
+    },
+    {
+        "label": "GraphDatabase",
+        "importPath": "neo4j",
+        "description": "neo4j",
+        "isExtraImport": true,
+        "detail": "neo4j",
+        "documentation": {}
+    },
+    {
+        "label": "GraphDatabase",
+        "importPath": "neo4j",
+        "description": "neo4j",
+        "isExtraImport": true,
+        "detail": "neo4j",
+        "documentation": {}
+    },
+    {
+        "label": "AutoTokenizer",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "AutoModel",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "AutoTokenizer",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "AutoModel",
+        "importPath": "transformers",
+        "description": "transformers",
+        "isExtraImport": true,
+        "detail": "transformers",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "isExtraImport": true,
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "find_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "find_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "find_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
+        "documentation": {}
+    },
+    {
+        "label": "SystemMessage",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
+        "documentation": {}
+    },
+    {
+        "label": "AIMessage",
+        "importPath": "langchain.schema",
+        "description": "langchain.schema",
+        "isExtraImport": true,
+        "detail": "langchain.schema",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain.prompts.prompt",
+        "description": "langchain.prompts.prompt",
+        "isExtraImport": true,
+        "detail": "langchain.prompts.prompt",
+        "documentation": {}
+    },
+    {
+        "label": "PromptTemplate",
+        "importPath": "langchain.prompts.prompt",
+        "description": "langchain.prompts.prompt",
+        "isExtraImport": true,
+        "detail": "langchain.prompts.prompt",
+        "documentation": {}
+    },
+    {
+        "label": "SystemMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "SystemMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessage",
+        "importPath": "langchain_core.messages",
+        "description": "langchain_core.messages",
+        "isExtraImport": true,
+        "detail": "langchain_core.messages",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "StrOutputParser",
+        "importPath": "langchain_core.output_parsers",
+        "description": "langchain_core.output_parsers",
+        "isExtraImport": true,
+        "detail": "langchain_core.output_parsers",
+        "documentation": {}
+    },
+    {
+        "label": "ChatPromptTemplate",
+        "importPath": "langchain.prompts",
+        "description": "langchain.prompts",
+        "isExtraImport": true,
+        "detail": "langchain.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGoogleGenerativeAI",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGoogleGenerativeAI",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGoogleGenerativeAI",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "ChatGoogleGenerativeAI",
+        "importPath": "langchain_google_genai",
+        "description": "langchain_google_genai",
+        "isExtraImport": true,
+        "detail": "langchain_google_genai",
+        "documentation": {}
+    },
+    {
+        "label": "create_retrieval_chain",
+        "importPath": "langchain.chains.retrieval",
+        "description": "langchain.chains.retrieval",
+        "isExtraImport": true,
+        "detail": "langchain.chains.retrieval",
+        "documentation": {}
+    },
+    {
+        "label": "create_retrieval_chain",
+        "importPath": "langchain.chains.retrieval",
+        "description": "langchain.chains.retrieval",
+        "isExtraImport": true,
+        "detail": "langchain.chains.retrieval",
+        "documentation": {}
+    },
+    {
+        "label": "ChatPromptTemplate",
+        "importPath": "langchain.prompts.chat",
+        "description": "langchain.prompts.chat",
+        "isExtraImport": true,
+        "detail": "langchain.prompts.chat",
+        "documentation": {}
+    },
+    {
+        "label": "SystemMessagePromptTemplate",
+        "importPath": "langchain.prompts.chat",
+        "description": "langchain.prompts.chat",
+        "isExtraImport": true,
+        "detail": "langchain.prompts.chat",
+        "documentation": {}
+    },
+    {
+        "label": "HumanMessagePromptTemplate",
+        "importPath": "langchain.prompts.chat",
+        "description": "langchain.prompts.chat",
+        "isExtraImport": true,
+        "detail": "langchain.prompts.chat",
+        "documentation": {}
+    },
+    {
+        "label": "Neo4jVector",
+        "importPath": "langchain_community.vectorstores.neo4j_vector",
+        "description": "langchain_community.vectorstores.neo4j_vector",
+        "isExtraImport": true,
+        "detail": "langchain_community.vectorstores.neo4j_vector",
+        "documentation": {}
+    },
+    {
+        "label": "Neo4jVector",
+        "importPath": "langchain_community.vectorstores.neo4j_vector",
+        "description": "langchain_community.vectorstores.neo4j_vector",
+        "isExtraImport": true,
+        "detail": "langchain_community.vectorstores.neo4j_vector",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_huggingface",
+        "description": "langchain_huggingface",
+        "isExtraImport": true,
+        "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_huggingface",
+        "description": "langchain_huggingface",
+        "isExtraImport": true,
+        "detail": "langchain_huggingface",
+        "documentation": {}
+    },
+    {
+        "label": "RunnablePassthrough",
+        "importPath": "langchain_core.runnables",
+        "description": "langchain_core.runnables",
+        "isExtraImport": true,
+        "detail": "langchain_core.runnables",
+        "documentation": {}
+    },
+    {
+        "label": "retry",
+        "importPath": "retry",
+        "description": "retry",
+        "isExtraImport": true,
+        "detail": "retry",
+        "documentation": {}
+    },
+    {
+        "label": "retry",
+        "importPath": "retry",
+        "description": "retry",
+        "isExtraImport": true,
+        "detail": "retry",
+        "documentation": {}
+    },
+    {
+        "label": "default_timer",
+        "importPath": "timeit",
+        "description": "timeit",
+        "isExtraImport": true,
+        "detail": "timeit",
+        "documentation": {}
+    },
+    {
+        "label": "default_timer",
+        "importPath": "timeit",
+        "description": "timeit",
+        "isExtraImport": true,
+        "detail": "timeit",
+        "documentation": {}
+    },
+    {
+        "label": "google.generativeai",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "google.generativeai",
+        "description": "google.generativeai",
+        "detail": "google.generativeai",
+        "documentation": {}
+    },
+    {
+        "label": "CONFIG",
+        "importPath": "config",
+        "description": "config",
+        "isExtraImport": true,
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "retrievalQuery",
+        "importPath": "cypher_query.retrieval_query",
+        "description": "cypher_query.retrieval_query",
+        "isExtraImport": true,
+        "detail": "cypher_query.retrieval_query",
+        "documentation": {}
+    },
+    {
+        "label": "get_embedding_model",
+        "importPath": "graphrag.get_embedding_model",
+        "description": "graphrag.get_embedding_model",
+        "isExtraImport": true,
+        "detail": "graphrag.get_embedding_model",
+        "documentation": {}
+    },
+    {
+        "label": "ChatPromptTemplate",
+        "importPath": "langchain_core.prompts",
+        "description": "langchain_core.prompts",
+        "isExtraImport": true,
+        "detail": "langchain_core.prompts",
+        "documentation": {}
+    },
+    {
+        "label": "get_llm_model",
+        "importPath": "llm_response.get_llm_model",
+        "description": "llm_response.get_llm_model",
+        "isExtraImport": true,
+        "detail": "llm_response.get_llm_model",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "get_llm_response",
+        "importPath": "llm_response.make_response",
+        "description": "llm_response.make_response",
+        "isExtraImport": true,
+        "detail": "llm_response.make_response",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_store_nodes",
+        "importPath": "graphrag.retriever",
+        "description": "graphrag.retriever",
+        "isExtraImport": true,
+        "detail": "graphrag.retriever",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_store_nodes",
+        "importPath": "graphrag.retriever",
+        "description": "graphrag.retriever",
+        "isExtraImport": true,
+        "detail": "graphrag.retriever",
+        "documentation": {}
+    },
+    {
+        "label": "SYSTEM_PROMPT",
+        "importPath": "prompt.system_prompt",
+        "description": "prompt.system_prompt",
+        "isExtraImport": true,
+        "detail": "prompt.system_prompt",
+        "documentation": {}
+    },
+    {
+        "label": "setup_driver",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def setup_driver():\n    chrome_options = Options()\n    chrome_options.add_argument(\"--headless\")\n    chrome_options.add_argument(\"--no-sandbox\")\n    chrome_options.add_argument(\"--disable-dev-shm-usage\")\n    chrome_options.add_argument(\"--disable-gpu\")\n    chrome_options.add_argument(\"--window-size=1920x1080\")\n    chrome_options.add_argument(\"user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36\")\n    chrome_options.add_argument(\"--disable-blink-features=AutomationControlled\")\n    chrome_options.add_experimental_option(\"excludeSwitches\", [\"enable-automation\"])",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_store_id",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def get_store_id(driver, url):\n    driver.get(url)\n    wait = WebDriverWait(driver, 5)\n    try:\n        first_element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '[data-cid]')))\n        store_id = first_element.get_attribute('data-cid')\n        return store_id\n    except TimeoutException:\n        print(\"요소를 찾을 수 없습니다. 스토어 ID를 가져오지 못했습니다.\")\n        return None",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "crawl_menu",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def crawl_menu(driver, store_id):\n    store_url = f\"https://m.place.naver.com/restaurant/{store_id}/menu/list\"\n    driver.get(store_url)\n    time.sleep(random.uniform(1, 3))\n    menu_sections = driver.find_elements(By.XPATH, '//*[@id=\"app-root\"]/div/div/div/div[6]/div/div[@class=\"place_section gkWf3\"]')\n    if menu_sections:\n        return crawl_menu_with_sections(driver)\n    else:\n        return crawl_menu_without_sections(driver)\ndef crawl_menu_with_sections(driver):",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "crawl_menu_with_sections",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def crawl_menu_with_sections(driver):\n    return driver.execute_script(\"\"\"\n        const sections = document.querySelectorAll('.place_section.gkWf3');\n        const menuData = {};\n        let menuIndex = 1;\n        sections.forEach(section => {\n            const menuItems = section.querySelectorAll('ul._d0Hx li');\n            menuItems.forEach(item => {\n                const menuName = item.querySelector('.lPzHi')?.textContent || '';\n                const priceText = item.querySelector('.GXS1X')?.textContent || '0';",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "crawl_menu_without_sections",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def crawl_menu_without_sections(driver):\n    return driver.execute_script(\"\"\"\n        const menuItems = document.querySelectorAll('.place_section_content ul li.E2jtL');\n        const menuData = {};\n        let menuIndex = 1;\n        menuItems.forEach(item => {\n            const menuName = item.querySelector('.lPzHi')?.textContent || '';\n            const priceText = item.querySelector('.GXS1X')?.textContent || '0';\n            const price = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;\n            menuData[menuIndex.toString()] = {",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "crawl_review",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def crawl_review(driver, store_id):\n    store_url = f\"https://m.place.naver.com/restaurant/{store_id}/review/visitor?reviewSort=recent\"\n    driver.get(store_url)\n    time.sleep(random.uniform(1, 3))\n    result = {\"unique_id\": store_id}\n    result[\"image_url\"] = get_image_url(driver)\n    result[\"coordinate\"] = get_coordinates(driver)\n    result[\"rating\"], result[\"rating_count\"] = get_rating_info(driver)\n    reviews = get_reviews(driver)\n    with ThreadPoolExecutor(max_workers=4) as executor:",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_image_url",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def get_image_url(driver):\n    try:\n        # 이미지 요소를 찾기 전에 잠시 대기\n        time.sleep(1)  # 페이지 로드 대기 시간 추가\n        image_element = driver.find_element(By.CSS_SELECTOR, 'img.K0PDV._div')\n        return image_element.get_attribute('src')\n    except NoSuchElementException:\n        print(\"이미지 요소를 찾을 수 없습니다.\")\n        return None  # 이미지 URL을 찾지 못한 경우 None 반환\ndef get_coordinates(driver):",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_coordinates",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def get_coordinates(driver):\n    try:\n        find_way_element = driver.find_element(By.CSS_SELECTOR, 'a[href*=\"longitude\"][href*=\"latitude\"]')\n        href = find_way_element.get_attribute('href')\n        longitude = re.search(r'longitude%5E([\\d.]+)', href).group(1)\n        latitude = re.search(r'latitude%5E([\\d.]+)', href).group(1)\n        return {\n            \"lat\": float(latitude),\n            \"lng\": float(longitude)\n        }",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_rating_info",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def get_rating_info(driver):\n    try:\n        rating_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM.fNnpD em')\n        rating = float(rating_element.text)\n        rating_count_element = driver.find_element(By.CSS_SELECTOR, 'div.vWSFS span.xobxM:nth-child(2)')\n        rating_count = int(rating_count_element.text.split('개')[0].replace(',', ''))\n        return rating, rating_count\n    except NoSuchElementException:\n        print(\"평점 정보 요소를 찾을 수 없습니다.\")\n        return None, None  # 평점 정보 요소를 찾지 못한 경우 None 반환",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_reviews",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def get_reviews(driver):\n    reviews = []\n    more_button_xpath = '//*[@id=\"app-root\"]/div/div/div/div[6]/div[2]/div[3]/div[2]/div/a/span'\n    while len(reviews) < 100:\n        try:\n            more_button = driver.find_element(By.XPATH, more_button_xpath)\n        except NoSuchElementException:\n            print(\"더보기 버튼을 찾을 수 없습니다.\")\n            break\n        driver.execute_script(\"arguments[0].click();\", more_button)",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "parse_review",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def parse_review(review):\n    parsed_data = {}\n    try:\n        user_info = review.find_element(By.CSS_SELECTOR, '.pui__JiVbY3')\n        parsed_data['user_id'] = user_info.find_element(By.CSS_SELECTOR, '.pui__NMi-Dp').text\n    except:\n        parsed_data['user_id'] = '알 수 없음'\n    visit_keywords = review.find_elements(By.CSS_SELECTOR, '.pui__V8F9nN')\n    parsed_data['visit_keywords'] = list(set(keyword.text.replace(\"대기 시간 \", \"\") if \"대기 시간 \" in keyword.text else keyword.text for keyword in visit_keywords))\n    try:",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "crawling.naver-map-crawler",
+        "description": "crawling.naver-map-crawler",
+        "peekOfCode": "def main():\n    # CSV 파일 읽기\n    df = pd.read_csv('../data/unique_mct_cleaned.csv')\n    # MCT_NM에서 수식어 제거\n    df['MCT_NM'] = df['MCT_NM'].apply(lambda x: x.replace('(주)', '').replace('(사)', '').replace('(유)', '').replace('(德)', '').strip())\n    # 키워드 리스트 생성\n    keywords = []\n    for _, row in df.iterrows():\n        addr_parts = row['ADDR'].split()[:3]\n        keyword = ' '.join(addr_parts + [row['MCT_NM']])",
+        "detail": "crawling.naver-map-crawler",
+        "documentation": {}
+    },
+    {
+        "label": "get_embedding",
+        "kind": 2,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "def get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()\n    return text_embeddings\n# Function to update embeddings in Neo4j\ndef update_review_embeddings():\n    with driver.session() as session:\n        # Query to get all reviews\n        query = \"MATCH (r:Review) WHERE r.textEmbedding IS NULL RETURN r.id AS id, r.storePk AS storePk, r.text AS text\"\n        results = session.run(query)\n        results_list = list(results)",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "update_review_embeddings",
+        "kind": 2,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "def update_review_embeddings():\n    with driver.session() as session:\n        # Query to get all reviews\n        query = \"MATCH (r:Review) WHERE r.textEmbedding IS NULL RETURN r.id AS id, r.storePk AS storePk, r.text AS text\"\n        results = session.run(query)\n        results_list = list(results)\n        # Iterate through each review and update its embedding\n        for record in tqdm(results_list, desc=\"Updating Embeddings\") :\n            review_id = record[\"id\"]\n            store_pk = record[\"storePk\"]",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "uri",
+        "kind": 5,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "uri = os.environ[\"NEO4J_URI\"]\nusername = os.environ[\"NEO4J_USERNAME\"]\npassword = os.environ[\"NEO4J_PASSWORD\"] \n# Initialize the Neo4j driver\ndriver = GraphDatabase.driver(uri, auth=(username, password))\n# Download from the 🤗 Hub\nmodel = SentenceTransformer(\"upskyy/bge-m3-korean\")\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "username",
+        "kind": 5,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "username = os.environ[\"NEO4J_USERNAME\"]\npassword = os.environ[\"NEO4J_PASSWORD\"] \n# Initialize the Neo4j driver\ndriver = GraphDatabase.driver(uri, auth=(username, password))\n# Download from the 🤗 Hub\nmodel = SentenceTransformer(\"upskyy/bge-m3-korean\")\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()\n    return text_embeddings",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "password",
+        "kind": 5,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "password = os.environ[\"NEO4J_PASSWORD\"] \n# Initialize the Neo4j driver\ndriver = GraphDatabase.driver(uri, auth=(username, password))\n# Download from the 🤗 Hub\nmodel = SentenceTransformer(\"upskyy/bge-m3-korean\")\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()\n    return text_embeddings\n# Function to update embeddings in Neo4j",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "driver",
+        "kind": 5,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "driver = GraphDatabase.driver(uri, auth=(username, password))\n# Download from the 🤗 Hub\nmodel = SentenceTransformer(\"upskyy/bge-m3-korean\")\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()\n    return text_embeddings\n# Function to update embeddings in Neo4j\ndef update_review_embeddings():\n    with driver.session() as session:",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "data_load.bge_embedding",
+        "description": "data_load.bge_embedding",
+        "peekOfCode": "model = SentenceTransformer(\"upskyy/bge-m3-korean\")\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    text_embeddings = model.encode(text).squeeze().tolist()\n    return text_embeddings\n# Function to update embeddings in Neo4j\ndef update_review_embeddings():\n    with driver.session() as session:\n        # Query to get all reviews\n        query = \"MATCH (r:Review) WHERE r.textEmbedding IS NULL RETURN r.id AS id, r.storePk AS storePk, r.text AS text\"",
+        "detail": "data_load.bge_embedding",
+        "documentation": {}
+    },
+    {
+        "label": "get_neo4j_vector",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "def get_neo4j_vector(index_name='queryVector'):\n    neo4jvector = Neo4jVector.from_existing_index(\n        embedding=embeddings_model,  # Using the custom embedding function\n        url=neo4j_url,\n        database='neo4j',\n        username=neo4j_user,\n        password=neo4j_password,\n        index_name=index_name,\n        text_node_property=\"textEmbedding\",\n        retrieval_query=retrievalQuery",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "get_results",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "def get_results(question):\n    start = timer()\n    try:\n        messages = [\n            SystemMessagePromptTemplate.from_template(SYSTEM_PROMPT),\n            HumanMessagePromptTemplate.from_template(PROMPT_TEMPLATE)\n        ]\n        prompt = ChatPromptTemplate.from_messages(messages)\n        llm = ChatGoogleGenerativeAI(model=\"gemini-1.5-flash\", google_api_key = gemini_key,convert_system_message_to_human=True)\n        chain = prompt | llm | StrOutputParser()",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"] = os.getenv(\"KYEONGCHAN_GEMINI_API_KEY\") \ngemini_key = os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]\nos.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "gemini_key",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "gemini_key = os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]\nos.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\n# llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"NEO4J_URI\"]",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "os.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\n# llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_url",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "neo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\n# llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_user",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "neo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\n# llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_password",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "neo4j_password = os.environ[\"NEO4J_PASSWORD\"] \n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\n# llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.\n\"\"\"",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "SYSTEM_PROMPT",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "SYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.\n\"\"\"\nPROMPT_TEMPLATE = \"\"\"\n{input}\nHere is the context in JSON format. This dataset contains information about restaurants that will be recommended to the user.\n<context>",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_TEMPLATE",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "PROMPT_TEMPLATE = \"\"\"\n{input}\nHere is the context in JSON format. This dataset contains information about restaurants that will be recommended to the user.\n<context>\n{context}\n</context>\nWhen recommending restaurants to a user related to a question, make sure to recommend at least five restaurants included in the context!\nCreate answers in Korean\nPlease add the following phrase at the end of your answer : \nThe following is an example of a response when recommending a restaurants to a user :",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "retrievalQuery",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "retrievalQuery = \"\"\"\nMATCH (node)<-[:HAS_REVIEW]-(store)\nRETURN node.text AS text,\n       store AS store,\n       score,\n       {\n         reviewText: node.text,\n         storeName: store.MCT_NM,\n         storeType: store.MCT_TYPE,\t\n         storeAddress: store.ADDR,",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "embeddings_model",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "embeddings_model = HuggingFaceEmbeddings(\n    model_name='upskyy/bge-m3-korean',\n    model_kwargs={'device':'cpu'},\n    encode_kwargs={'normalize_embeddings':True},\n)\ndef get_neo4j_vector(index_name='queryVector'):\n    neo4jvector = Neo4jVector.from_existing_index(\n        embedding=embeddings_model,  # Using the custom embedding function\n        url=neo4j_url,\n        database='neo4j',",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "store_retriever",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(chain)",
+        "description": "graphrag.graphrag_engine_v0(chain)",
+        "peekOfCode": "store_retriever = get_neo4j_vector().as_retriever(search_kwargs={\"k\": 5})\n@retry(tries=5, delay=5)\ndef get_results(question):\n    start = timer()\n    try:\n        messages = [\n            SystemMessagePromptTemplate.from_template(SYSTEM_PROMPT),\n            HumanMessagePromptTemplate.from_template(PROMPT_TEMPLATE)\n        ]\n        prompt = ChatPromptTemplate.from_messages(messages)",
+        "detail": "graphrag.graphrag_engine_v0(chain)",
+        "documentation": {}
+    },
+    {
+        "label": "mean_pooling",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "def mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]\n    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()\n    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    encoded_input = tokenizer(text, padding=True, truncation=True, return_tensors=\"pt\")\n    with torch.no_grad():\n        model_output = model(**encoded_input)\n    return mean_pooling(model_output, encoded_input[\"attention_mask\"]).squeeze().tolist()",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "get_embedding",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "def get_embedding(text):\n    encoded_input = tokenizer(text, padding=True, truncation=True, return_tensors=\"pt\")\n    with torch.no_grad():\n        model_output = model(**encoded_input)\n    return mean_pooling(model_output, encoded_input[\"attention_mask\"]).squeeze().tolist()\n# 제미나이 API 키 설정\ngenai.configure(api_key=gemini_key)\nllm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "run_query",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "def run_query(url, user, password, query, params):\n    driver = GraphDatabase.driver(url, auth=(user, password))\n    with driver.session() as session:\n        # print(params)\n        result = session.run(query, params)\n        # print(result)\n        return [record for record in result]\ndef vector_graph_qa(query):\n    query_vector = get_embedding(query)\n    # print(query_vector)",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "vector_graph_qa",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "def vector_graph_qa(query):\n    query_vector = get_embedding(query)\n    # print(query_vector)\n    url = neo4j_url\n    user = neo4j_user\n    password = neo4j_password\n    params = {'queryVector':query_vector}\n    cypher_query = \"\"\"\n    CALL db.index.vector.queryNodes('queryVector', 5, $queryVector)\n    YIELD node AS doc, score",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "get_results",
+        "kind": 2,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "def get_results(question):\n    start = timer()\n    try:\n        df = vector_graph_qa(question)\n        ans = PROMPT.format(questions=question, context=df)\n        chat_llm = ChatGoogleGenerativeAI(model=\"gemini-pro\", google_api_key=gemini_key,\n                                    convert_system_message_to_human=True) \n        messages = chat_llm(\n        [  \n            SystemMessage(content=\"SYSTEM_PROMPT\"),",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"] = os.getenv(\"KYEONGCHAN_GEMINI_API_KEY\") \ngemini_key = os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]\nos.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "gemini_key",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "gemini_key = os.environ[\"KYEONGCHAN_GEMINI_API_KEY\"]\nos.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model\ntokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "os.environ[\"NEO4J_URI\"]",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "os.environ[\"NEO4J_URI\"] = os.getenv(\"NEO4J_URI\")\nos.environ[\"NEO4J_USERNAME\"] =os.getenv(\"NEO4J_USERNAME\")\nos.environ[\"NEO4J_PASSWORD\"] =os.getenv(\"NEO4J_PASSWORD\")\nneo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model\ntokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")\nmodel = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_url",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "neo4j_url = os.environ[\"NEO4J_URI\"]\nneo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model\ntokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")\nmodel = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")\n# Define mean pooling function\ndef mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_user",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "neo4j_user = os.environ[\"NEO4J_USERNAME\"]\nneo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model\ntokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")\nmodel = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")\n# Define mean pooling function\ndef mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]\n    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "neo4j_password",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "neo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nimport google.generativeai as genai\n# Load BGE-M3-Korean model\ntokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")\nmodel = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")\n# Define mean pooling function\ndef mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]\n    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()\n    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "tokenizer",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "tokenizer = AutoTokenizer.from_pretrained(\"upskyy/bge-m3-korean\")\nmodel = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")\n# Define mean pooling function\ndef mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]\n    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()\n    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    encoded_input = tokenizer(text, padding=True, truncation=True, return_tensors=\"pt\")",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "model = AutoModel.from_pretrained(\"upskyy/bge-m3-korean\")\n# Define mean pooling function\ndef mean_pooling(model_output, attention_mask):\n    token_embeddings = model_output[0]\n    input_mask_expanded = attention_mask.unsqueeze(-1).expand(token_embeddings.size()).float()\n    return torch.sum(token_embeddings * input_mask_expanded, 1) / torch.clamp(input_mask_expanded.sum(1), min=1e-9)\n# Function to get embeddings for a given text\ndef get_embedding(text):\n    encoded_input = tokenizer(text, padding=True, truncation=True, return_tensors=\"pt\")\n    with torch.no_grad():",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "llm_model",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "llm_model = genai.GenerativeModel(model_name='gemini-1.5-flash')\nSYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.\n\"\"\"\nPROMPT_TEMPLATE = \"\"\"\n{questions}\nHere is the context in JSON format. This dataset contains information about restaurants that will be recommended to the user.",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "SYSTEM_PROMPT",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "SYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.\n\"\"\"\nPROMPT_TEMPLATE = \"\"\"\n{questions}\nHere is the context in JSON format. This dataset contains information about restaurants that will be recommended to the user.\n<context>",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT_TEMPLATE",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "PROMPT_TEMPLATE = \"\"\"\n{questions}\nHere is the context in JSON format. This dataset contains information about restaurants that will be recommended to the user.\n<context>\n{context}\n</context>\nWhen recommending restaurants to a user related to a question, make sure to recommend at least five restaurants included in the context!\nCreate answers in Korean\nPlease add the following phrase at the end of your answer : \nThe following is an example of a response when recommending a restaurants to a user :",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "PROMPT",
+        "kind": 5,
+        "importPath": "graphrag.graphrag_engine_v0(nochain)",
+        "description": "graphrag.graphrag_engine_v0(nochain)",
+        "peekOfCode": "PROMPT = PromptTemplate(\n    input_variables=[\"questions\",\"context\"], template= PROMPT_TEMPLATE\n)\ndef run_query(url, user, password, query, params):\n    driver = GraphDatabase.driver(url, auth=(user, password))\n    with driver.session() as session:\n        # print(params)\n        result = session.run(query, params)\n        # print(result)\n        return [record for record in result]",
+        "detail": "graphrag.graphrag_engine_v0(nochain)",
+        "documentation": {}
+    },
+    {
+        "label": "get_neo4j_vector",
+        "kind": 2,
+        "importPath": "graphrag.retriever",
+        "description": "graphrag.retriever",
+        "peekOfCode": "def get_neo4j_vector(index_name='queryVector'):\n    neo4jvector = Neo4jVector.from_existing_index(\n        embedding=get_embedding_model(),  # Using the custom embedding function\n        url=CONFIG.neo4j_url,\n        database='neo4j',\n        username=CONFIG.neo4j_user,\n        password=CONFIG.neo4j_password,\n        index_name=index_name,\n        text_node_property=\"textEmbedding\",\n        retrieval_query=retrievalQuery",
+        "detail": "graphrag.retriever",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_store_nodes",
+        "kind": 2,
+        "importPath": "graphrag.retriever",
+        "description": "graphrag.retriever",
+        "peekOfCode": "def retrieve_store_nodes(query):\n    store_retriever = get_neo4j_vector().as_retriever(search_kwargs={\"k\": 5})\n    # 비동기 메서드는 동기 호출로 대체\n    result_nodes = store_retriever.invoke(query)  # invoke는 동기적으로 실행되는 메서드\n    return result_nodes",
+        "detail": "graphrag.retriever",
+        "documentation": {}
+    },
+    {
+        "label": "get_embedding_model",
+        "kind": 2,
+        "importPath": "graphrag.get_embedding_model",
+        "description": "graphrag.get_embedding_model",
+        "peekOfCode": "def get_embedding_model():\n    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')\n    embeddings_model = HuggingFaceEmbeddings(\n        model_name='upskyy/bge-m3-korean',\n        model_kwargs={'device':device},\n        encode_kwargs={'normalize_embeddings':False},\n    )\n    return embeddings_model",
+        "detail": "graphrag.get_embedding_model",
+        "documentation": {}
+    },
+    {
+        "label": "get_llm_model",
+        "kind": 2,
+        "importPath": "llm_response.get_llm_model",
+        "description": "llm_response.get_llm_model",
+        "peekOfCode": "def get_llm_model():\n    load_dotenv(verbose=True)\n    llm = ChatGoogleGenerativeAI(\n        model=\"gemini-1.5-flash\",\n        temperature=0,\n        max_tokens=None,\n        timeout=None,\n        max_retries=2,\n        api_key=os.environ['KYEONGCHAN_GEMINI_API_KEY']\n    )",
+        "detail": "llm_response.get_llm_model",
+        "documentation": {}
+    },
+    {
+        "label": "get_llm_response",
+        "kind": 2,
+        "importPath": "llm_response.make_response",
+        "description": "llm_response.make_response",
+        "peekOfCode": "def get_llm_response(user_input):\n    prompt = ChatPromptTemplate.from_messages(\n        [\n            (\n                \"system\",\n                \"You are a helpful assistant that recommeds must-go restaurants in Jeju island, Korea. Answer only in Korean.\",\n            ),\n            (\"human\", \"{user_input}\"),\n        ]\n    )",
+        "detail": "llm_response.make_response",
+        "documentation": {}
+    },
+    {
+        "label": "llm",
+        "kind": 5,
+        "importPath": "llm_response.make_response",
+        "description": "llm_response.make_response",
+        "peekOfCode": "llm = get_llm_model()\ndef get_llm_response(user_input):\n    prompt = ChatPromptTemplate.from_messages(\n        [\n            (\n                \"system\",\n                \"You are a helpful assistant that recommeds must-go restaurants in Jeju island, Korea. Answer only in Korean.\",\n            ),\n            (\"human\", \"{user_input}\"),\n        ]",
+        "detail": "llm_response.make_response",
+        "documentation": {}
+    },
+    {
+        "label": "SYSTEM_PROMPT",
+        "kind": 5,
+        "importPath": "prompt.system_prompt",
+        "description": "prompt.system_prompt",
+        "peekOfCode": "SYSTEM_PROMPT = \"\"\"You are an expert in recommending restaurants.\n* Create answers in Korean\n* If the question is not about restaurants recommendation, please answer like this:\nSorry, I can only answer questions related to restaurants recommendation.\n* Don't answer the same sentence repeatedly.\n\"\"\"",
+        "detail": "prompt.system_prompt",
+        "documentation": {}
+    },
+    {
+        "label": "retrievalQuery",
+        "kind": 5,
+        "importPath": "cypher_query.retrieval_query",
+        "description": "cypher_query.retrieval_query",
+        "peekOfCode": "retrievalQuery = \"\"\"\nMATCH (node)<-[:HAS_REVIEW]-(store)\nRETURN node.text AS text,\n       store AS store,\n       score,\n       {\n         reviewText: node.text,\n         storeName: store.MCT_NM,\n         storeType: store.MCT_TYPE,\t\n         storeAddress: store.ADDR,",
+        "detail": "cypher_query.retrieval_query",
+        "documentation": {}
+    },
+    {
+        "label": "clear_chat_history",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def clear_chat_history():\n    st.session_state.messages = [{\"role\": \"assistant\", \"content\": \"어드런 식당 찾으시쿠과?\"}]\nst.sidebar.button('Clear Chat History', on_click=clear_chat_history)\nif query := st.chat_input(\"Say something\"):\n    st.session_state.messages.append({\"role\": \"user\", \"content\": query})\n    with st.chat_message(\"user\"):\n        st.write(query)\nfrom graphrag.retriever import retrieve_store_nodes\nif st.session_state.messages[-1][\"role\"] != \"assistant\":\n    with st.chat_message(\"assistant\"):",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "Config",
+        "kind": 6,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "class Config:\n    neo4j_url = os.environ[\"NEO4J_URI\"]\n    neo4j_user = os.environ[\"NEO4J_USERNAME\"]\n    neo4j_password = os.environ[\"NEO4J_PASSWORD\"] \nCONFIG = Config()",
+        "detail": "config",
+        "documentation": {}
+    },
+    {
+        "label": "CONFIG",
+        "kind": 5,
+        "importPath": "config",
+        "description": "config",
+        "peekOfCode": "CONFIG = Config()",
+        "detail": "config",
+        "documentation": {}
+    }
+]

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 
 
-def get_model():
+def get_llm_model():
 
     load_dotenv(verbose=True)
 
@@ -17,3 +17,4 @@ def get_model():
         api_key=os.environ['KYEONGCHAN_GEMINI_API_KEY']
     )
     return llm
+
