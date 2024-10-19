@@ -23,7 +23,7 @@ def get_neo4j_vector(index_name='queryVector'):
 
 # retrieve_store_nodes 함수에서 동기적으로 get_neo4j_vector 호출
 def retrieve_store_nodes(query):
-    store_retriever = get_neo4j_vector().as_retriever(search_kwargs={"k": 5})
+    store_retriever = get_neo4j_vector().as_retriever(search_kwargs={"k": 6})
     
     # 비동기 메서드는 동기 호출로 대체
     result_nodes = store_retriever.invoke(query)  # invoke는 동기적으로 실행되는 메서드

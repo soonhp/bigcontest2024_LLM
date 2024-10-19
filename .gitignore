@@ -9,3 +9,5 @@ crawling/naver-map-results.json
 crawling/google_crawling.json
 desktop.ini
 /data
+
+temp_*
