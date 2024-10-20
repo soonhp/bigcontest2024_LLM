@@ -6,6 +6,7 @@ llm_response/__pycache__/*
 graphrag.ipynb
 make_unique_mct.ipynb
 crawling/naver-map-results.json
+crawling/naver-map-results-preprocessed.json
 crawling/google_crawling.json
 desktop.ini
 /data
