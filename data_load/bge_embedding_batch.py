@@ -61,7 +61,7 @@ def update_neo4j_batch(batch_records, batch_embeddings, session):
         session.run(update_query, review_id=review_id, store_pk=store_pk, embedding=embedding_list)
 
 # Run the embedding update function
-update_review_embeddings(batch_size=1024, update_batch_size=100)
+update_review_embeddings(batch_size=256, update_batch_size=25)
 
 # Close the driver connection
 driver.close()
