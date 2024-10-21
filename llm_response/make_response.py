@@ -1,6 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.prompts import PromptTemplate
-from get_llm_model import get_llm_model
+
+from llm_response.get_llm_model import get_llm_model
 
 
 llm = get_llm_model()

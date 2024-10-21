@@ -13,3 +13,4 @@ desktop.ini
 
 temp_*
 /.vscode/*
+*.pyc

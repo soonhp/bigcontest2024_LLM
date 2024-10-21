@@ -22,11 +22,11 @@ def get_neo4j_vector(index_name='queryVector'):
     )
     return neo4jvector
 
-# retrieve_store_nodes 함수에서 동기적으로 get_neo4j_vector 호출
 def retrieve_store_nodes(query):
+    """
+    쿼리 임베딩 <-> 리뷰 임베딩 유사도 측정하여 상위 n개의 Store 노드 추출
+    """
     store_retriever = get_neo4j_vector().as_retriever(search_kwargs={"k": 6})
-    
-    # 비동기 메서드는 동기 호출로 대체
     result_nodes = store_retriever.invoke(query)  # invoke는 동기적으로 실행되는 메서드
     return result_nodes
 

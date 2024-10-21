@@ -2,13 +2,13 @@ import os
 import streamlit as st
 import pandas as pd
 import numpy as np
-from llm_response.make_response import get_llm_response
-from llm_response.get_llm_model import get_llm_model  
-from langchain.chains.retrieval import create_retrieval_chain
 from graphrag.retriever import retrieve_store_nodes
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
+from llm_response.make_response import get_llm_response
 from prompt.system_prompt import SYSTEM_PROMPT
+from llm_response.langgraph_app import app, GraphState
+from langchain_core.runnables import RunnableConfig
 
 st.title("\"잘도 맛있수다!\"가 절로 나오는 제주도 맛집 추천! 🍊🍊")
 
@@ -31,15 +31,15 @@ if query := st.chat_input("Say something"):
         st.write(query)
 
 
-
+config = RunnableConfig(recursion_limit=10, configurable={"thread_id": "movie"})
 if st.session_state.messages[-1]["role"] != "assistant":
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             
-            # response = get_llm_response(prompt)
-            # rchain = create_retrieval_chain(retrieve_store_nodes, chain)
-            # response = rchain.invoke({"input": query})
+            graph_state = GraphState(query=query)
+            response_message = app.invoke(graph_state, config=config)
             response = retrieve_store_nodes(query)
+            print(f"response : \n{response}")
             placeholder = st.empty()
             
 
