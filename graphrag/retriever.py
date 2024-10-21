@@ -1,11 +1,7 @@
-from dotenv import load_dotenv
 from config import CONFIG
 from cypher_query.retrieval_query import retrievalQuery, retrievalQuery_v2
 from graphrag.get_embedding_model import get_embedding_model
 from langchain_community.vectorstores.neo4j_vector import Neo4jVector
-
-
-load_dotenv()
 
 
 def get_neo4j_vector(index_name='queryVector'):
@@ -17,7 +13,6 @@ def get_neo4j_vector(index_name='queryVector'):
         password=CONFIG.neo4j_password,
         index_name=index_name,
         text_node_property="textEmbedding",
-        # retrieval_query=retrievalQuery
         retrieval_query=retrievalQuery_v2
     )
     return neo4jvector

@@ -1,4 +1,5 @@
-from typing import List, TypedDict
+from typing import Dict, List, TypedDict
+from langchain_community.vectorstores.neo4j_vector import Neo4jVector
 
 
 class GraphState(TypedDict):
@@ -8,6 +9,11 @@ class GraphState(TypedDict):
 
     t2c_for_search : str
     retrieval_result_for_search : str
+
+    messages : List[Dict]
+    candidate: List[str]
+
+    final_answer: str
 
     ###########################
     filter: str  # 메타 정보 필터링 쿼리
@@ -19,8 +25,8 @@ class GraphState(TypedDict):
     profile: str
     movies: List[str]
     history: List[dict]
-    candidate: List[dict]
+    
     recommendation: str
     status: str
     answer: str
-    final_answer: str
+    

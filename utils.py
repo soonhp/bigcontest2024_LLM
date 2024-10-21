@@ -1,9 +1,10 @@
 from neo4j import GraphDatabase
 import os
+from config import CONFIG
 
-graphdb_driver = GraphDatabase.driver(uri=os.environ["NEO4J_URI"], 
+graphdb_driver = GraphDatabase.driver(uri=CONFIG.neo4j_url, 
                                       auth=(
-                                          os.environ["NEO4J_USERNAME"],
-                                          os.environ["NEO4J_PASSWORD"]
+                                          CONFIG.neo4j_user,
+                                          CONFIG.neo4j_password
                                           )
                                         )

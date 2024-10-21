@@ -22,6 +22,7 @@ RETURN node.text AS text,
        store AS store,
        score,
        {
+         pk : store.pk,
          reviewText: node.text,
          storeName: store.MCT_NM,
          store_Type: store.MCT_TYPE,	

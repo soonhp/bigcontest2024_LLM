@@ -13,4 +13,5 @@ def route_and_intent_analysis(llm, state: GraphState):
    state['query_type'] = route_response_json['query_type']
    state['intent'] = route_response_json['intent'] if 'intent' in route_response_json else None
 
+
    return state
