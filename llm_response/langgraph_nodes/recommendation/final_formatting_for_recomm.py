@@ -2,6 +2,13 @@ from llm_response.langgraph_graph_state import GraphState
 from utils import get_ratings_str_for_node
 import streamlit as st
 
+REVIEW_HTML = """<div style="background-color: #f9f9f9; padding: 10px 15px; border-left: 4px solid #FFA500; margin-bottom: 20px;">
+        <p style="font-style: italic; margin: 0;">
+            <strong>리뷰: "{review}"</strong>
+        </p>
+    </div>"""
+
+
 def get_image_html_str(node):
     image_html = '<div style="display: flex; gap: 10px;">'
     if node['image_url_naver']:
@@ -12,6 +19,7 @@ def get_image_html_str(node):
         image_html += f"""\n<img src="{node['image_url_google']}" alt="Naver Image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 10%;">"""
     image_html += '</div>'
     return image_html
+
 
 
 def final_formatting_for_recomm(graphdb_driver, state:GraphState):
@@ -25,14 +33,16 @@ def final_formatting_for_recomm(graphdb_driver, state:GraphState):
         retrieved_stores_nodes.append(result.records[0]['s'])
 
     final_answer = ''
+    st.markdown('')
     st.markdown(state['selected_recommendations']['decorational_mention_start'])
     for rank, (node, pk_desc) in enumerate(zip(retrieved_stores_nodes, state['selected_recommendations']['recommendations']), start=1):
-        image_html = get_image_html_str(node)
+        
         st.markdown(f"## {rank}. {node['MCT_NM']}")
+        image_html = get_image_html_str(node)
         st.markdown(image_html, unsafe_allow_html=True)
         st.markdown('')
-        st.markdown(f"- **⭐ : {get_ratings_str_for_node(node)}**")
-        st.markdown(f"- **리뷰 : \"{pk_desc['review']}\"**")
+        st.markdown(get_ratings_str_for_node(node), unsafe_allow_html=True)
+        st.markdown(REVIEW_HTML.format(review=pk_desc['review']), unsafe_allow_html=True)
         st.markdown(pk_desc['desc'])
         st.markdown('---')
     st.markdown(state['selected_recommendations']['decorational_mention_end'])

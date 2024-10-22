@@ -25,17 +25,17 @@ def get_store_candidates(graphdb_driver, store_retriever_rev_emb, state:GraphSta
         intent_guide += f"<li style='margin-bottom: 8px;'>{converted_intent}</li>"
 
         rev_sim_result = store_retriever_rev_emb.invoke(intent)  # invoke는 동기적으로 실행되는 메서드
-        document = rev_sim_result[0]
-        store_name = document.metadata['storeName']
-        review_text = document.page_content  # 페이지 내용에 접근할 때는 page_content
-
-        print(f"Store Name: {store_name}")
-        print(f"Review Text: {review_text}")
-        if document.metadata['pk'] not in [d.metadata['pk'] for d in candidates]:  # 중복방지
-            candidates.append(document)
+        for document in rev_sim_result:
+            store_name = document.metadata['storeName']
+            review_text = document.page_content  # 페이지 내용에 접근할 때는 page_content
+            print(f"Store Name: {store_name}")
+            print(f"Review Text: {review_text}")
+            print()
+            if document.metadata['pk'] not in [d.metadata['pk'] for d in candidates]:  # 중복방지
+                candidates.append(document)
 
     intent_guide += f"""  	</ul>
-    <h5 style="font-size: 16px;">⏳ 3개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
+    <h5 style="font-size: 16px;">⏳ 위 조건을 만족하는 {len(candidates)}개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
     
 </div>"""
 

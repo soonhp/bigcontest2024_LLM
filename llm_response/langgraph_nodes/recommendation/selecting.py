@@ -16,5 +16,6 @@ def final_selecting_for_recomm(llm, state: GraphState):
    print(f"prompt : {prompt}")
    response = llm.invoke(prompt)
    print(response.content)
+   print(f"input tokens : {response.usage_metadata['input_tokens']:,}")
    state['selected_recommendations'] = eval(response.content.replace('```', '').replace('json', '').strip())
    return state

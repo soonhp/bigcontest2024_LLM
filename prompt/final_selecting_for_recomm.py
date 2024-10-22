@@ -20,10 +20,11 @@ TASK)
 Based on the user's question and understanding their intent, select the top 3 optimal restaurants.
 1. The more suitable the restaurant, the higher its rank.
 2. Ensure each recommendation truly fits the user's needs; if not don't recommend.
-3. Refine the provided reviews so they can be clearly presented to the user receiving the recommendations.
+3. Refine and correct the provided reviews spelling so they can be clearly presented to the user receiving the recommendations.
 4. The reasons for recommendation should include all the provided data and be written in sentence form.
 5. Please use a friendly and gentle tone.
-6. Answer only in json format
+6. Never use any information not provided.
+7. Answer only in json format
 
 EXAMPLE)
 - QUESTION : 8살 아이 포함 3인 가족 가기 좋은 평균가격 3만원대 패밀리 레스토랑 추천해줘
