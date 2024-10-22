@@ -1,5 +1,5 @@
 from config import CONFIG
-from cypher_query.retrieval_query import retrievalQuery, retrievalQuery_v2
+from cypher_query.retrieval_query import retrievalQuery, retrievalQuery_v2, retrievalQuery_v3
 from graphrag.get_embedding_model import get_embedding_model
 from langchain_community.vectorstores.neo4j_vector import Neo4jVector
 
@@ -13,7 +13,7 @@ def get_neo4j_vector(index_name='queryVector'):
         password=CONFIG.neo4j_password,
         index_name=index_name,
         text_node_property="textEmbedding",
-        retrieval_query=retrievalQuery_v2
+        retrieval_query=retrievalQuery_v3
     )
     return neo4jvector
 

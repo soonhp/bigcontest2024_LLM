@@ -1,14 +1,14 @@
 from llm_response.langgraph_graph_state import GraphState
 import streamlit as st
 
-def get_store_candidates(graphdb_driver, retriever, state:GraphState):
+def get_store_candidates(graphdb_driver, store_retriever_rev_emb, state:GraphState):
     # Review similarity
     st.markdown(f"<small>아래와 같은 조건을 만족하는 식당 리뷰를 찾는 중...</small>", unsafe_allow_html=True)
     candidates = []
     for intent in state['intent']:
         st.markdown(f"<small>{intent}</small>", unsafe_allow_html=True)
 
-        rev_sim_result = retriever.invoke(intent)  # invoke는 동기적으로 실행되는 메서드
+        rev_sim_result = store_retriever_rev_emb.invoke(intent)  # invoke는 동기적으로 실행되는 메서드
         document = rev_sim_result[0]
         store_name = document.metadata['storeName']
         store_image_kakao = document.metadata['store_Image']['kakao']

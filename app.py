@@ -6,7 +6,6 @@ from graphrag.retriever import get_neo4j_vector, retrieve_store_nodes
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
 from llm_response.make_response import get_llm_response
-from prompt.system_prompt import SYSTEM_PROMPT
 from llm_response.langgraph_app import app, GraphState
 from langchain_core.runnables import RunnableConfig
 

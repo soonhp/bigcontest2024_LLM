@@ -12,6 +12,7 @@ class GraphState(TypedDict):
 
     messages : List[Dict]
     candidate: List[str]
+    selected_recommendations : Dict
 
     final_answer: str
 

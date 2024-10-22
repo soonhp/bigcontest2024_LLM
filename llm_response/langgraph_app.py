@@ -4,7 +4,8 @@ from graphrag.retriever import get_neo4j_vector
 from llm_response.conditional_decision.route_query import is_search_query
 from llm_response.get_llm_model import get_llm_model
 from llm_response.langgraph_graph_state import GraphState
-from llm_response.langgraph_nodes.final_formatting import final_formatting_for_search, final_formatting_for_recomm
+from llm_response.langgraph_nodes.final_formatting import final_formatting_for_search
+from llm_response.langgraph_nodes.selecting import final_selecting_for_recomm
 from llm_response.langgraph_nodes.get_store_candidates import get_store_candidates
 from llm_response.langgraph_nodes.retrieve_for_search_cypher import retrieve_for_search_cypher
 from llm_response.langgraph_nodes.route_and_intent_analysis import route_and_intent_analysis
@@ -30,7 +31,7 @@ workflow.add_node("final_formatting_for_search", lambda state: final_formatting_
 
 # Recomm query nodes
 workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm, store_retriever_rev_emb, state))
-workflow.add_node("final_formatting_for_recomm", lambda state: final_formatting_for_recomm(llm, state))
+workflow.add_node("final_selecting_for_recomm", lambda state: final_selecting_for_recomm(llm, state))
 
 workflow.add_conditional_edges(
     'route_and_intent_analysis',
@@ -47,8 +48,8 @@ workflow.add_edge('retrieve_for_search_cypher', 'final_formatting_for_search')
 workflow.add_edge('final_formatting_for_search', END)
 
 # Recomm
-workflow.add_edge('get_store_candidates', 'final_formatting_for_recomm')
-workflow.add_edge('final_formatting_for_recomm', END)
+workflow.add_edge('get_store_candidates', 'final_selecting_for_recomm')
+workflow.add_edge('final_selecting_for_recomm', END)
 
 workflow.set_entry_point("route_and_intent_analysis")
 app = workflow.compile()
