@@ -20,9 +20,10 @@ TASK)
 Based on the user's question and understanding their intent, select the top 3 optimal restaurants.
 1. The more suitable the restaurant, the higher its rank.
 2. Ensure each recommendation truly fits the user's needs; if not don't recommend.
-3. The reasons for recommendation should include all the provided data and be written in sentence form.
-4. Please use a friendly and gentle tone.
-5. Answer only in json format
+3. Refine the provided reviews so they can be clearly presented to the user receiving the recommendations.
+4. The reasons for recommendation should include all the provided data and be written in sentence form.
+5. Please use a friendly and gentle tone.
+6. Answer only in json format
 
 EXAMPLE)
 - QUESTION : 8살 아이 포함 3인 가족 가기 좋은 평균가격 3만원대 패밀리 레스토랑 추천해줘
@@ -101,14 +102,17 @@ pk : 8951
     'recommendations' : [
                             {{
                                 'pk' : 4236,
+                                'review' : '맛도 좋고 3명 3인 세트로 식사 저렴하고 맛있음',
                                 'desc' : '이곳은 꼬치구이 전문점이지만, **갈치조림**과 **흑돼지두루치기** 같은 다양한 메뉴가 있어 온 가족이 즐길 수 있어요. 3인 세트 메뉴는 7만 3천 원으로 구성되어, 맛있고 저렴하게 3인 가족이 식사하기 좋아요. 또 대기 시간도 거의 없고, 예약 없이 바로 이용할 수 있다는 점도 가족 외식에 적합해요. 가족 여행이나 친목 모임에 어울리는 곳이랍니다.'
                             }},
                             {{
                                 'pk' : 287,
+                                'review' : '세 가지 메뉴가 있으며 모두 수준급입니다. 아이도 잘 먹어요~',
                                 'desc' : '가정식 메뉴를 제공하는 이곳은 **함박스테이크 정식**(16,000원), **고기국수** 같은 다양한 음식을 3만원대에 즐길 수 있어요. 메뉴가 아이도 잘 먹을 수 있는 편안한 구성이라, 8살 아이도 문제없이 먹을 수 있을 거예요. 또한 대기 시간도 거의 없고, 예약 없이 바로 입장할 수 있어 부담 없이 방문할 수 있답니다. 가족끼리 편안한 식사를 원하시면 좋을 것 같아요.'
                             }},
                             {{
                                 'pk' : 8951,
+                                'review' : '재방문의사 무한대~!',
                                 'desc' : '이곳은 제주의 가정식 전문점으로, **생고기**를 중심으로 한 메뉴를 제공합니다. 특히 생고기 200g이 12,000원으로 3인 가족이 충분히 다양한 음식을 맛보실 수 있어요. 대기 시간도 짧고, 예약 없이 방문이 가능해요. 가족 여행 중에도 편안하고 맛있는 식사를 할 수 있어요. 깨끗하고 쾌적한 환경이라 아이와 함께 방문하기 좋답니다.'
                             }}
                         ]
