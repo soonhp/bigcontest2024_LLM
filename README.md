@@ -2,7 +2,7 @@
 
 ## DB SCHEMA
 
-<p aling="center">
+<p align="center">
 <img width="70%" alt="DB_SCHEMA" src="https://github.com/user-attachments/assets/9130ad7b-260a-4d32-8ce4-3ced6b46a3fd"
 </p>
 
