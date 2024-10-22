@@ -6,9 +6,11 @@
 <img width="70%" alt="DB_SCHEMA" src="https://github.com/user-attachments/assets/9130ad7b-260a-4d32-8ce4-3ced6b46a3fd"
 </p>
 
+## Pipeline
+![pipeline](./images/pipeline.png)
 
-
-## 네이버, 카카오, 구글 플랫폼 별로
+## Data Load
+###네이버, 카카오, 구글 플랫폼 별로
 
 1. 사진(URL)
 2. 리뷰 데이터(100개 미만)
@@ -17,7 +19,7 @@
   - 구글 - 개수
 3. 별점 정보
 
-## + 추가적인 정보 활용
+### + 추가적인 정보 활용
 
 - 네이버
 영업시간,
