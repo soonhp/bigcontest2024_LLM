@@ -1,7 +1,11 @@
 # bigcontest2024
 
 ## DB SCHEMA
-![DB_SCHEMA](https://github.com/user-attachments/assets/9130ad7b-260a-4d32-8ce4-3ced6b46a3fd)
+
+<p aling="center">
+<img width="70%" alt="DB_SCHEMA" src="https://github.com/user-attachments/assets/9130ad7b-260a-4d32-8ce4-3ced6b46a3fd"
+</p>
+
 
 
 ## 네이버, 카카오, 구글 플랫폼 별로
