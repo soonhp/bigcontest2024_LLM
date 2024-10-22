@@ -1,5 +1,7 @@
 # bigcontest2024
 
+## DB SCHEMA
+
 
 ## 네이버, 카카오, 구글 플랫폼 별로
 
