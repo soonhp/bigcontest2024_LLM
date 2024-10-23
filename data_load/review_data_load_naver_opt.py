@@ -33,25 +33,26 @@ def preprocess_data(file_path):
 
     return processed_data
 
-def insert_reviews_node(tx, reviews):
-    """리뷰 노드와 STORE 간의 관계를 생성합니다."""
-    for review in reviews:
-        tx.run(
-            """
-            MERGE (r:Review:Naver {id: $reviewId, source: "Naver", storePk: toInteger($storeId), text:$text, user_id:$user_id, visit_keywords:$visit_keywords})
-            """,
-            **review
-        )
+def insert_reviews_node(tx, review):
+    """리뷰 노드를 생성하고 가게와의 관계를 생성합니다."""
+    tx.run(
+        """
+        MERGE (r:Review:Naver {id: $reviewId, source: "Naver", storePk: toInteger($storeId)})
+        ON CREATE SET r.text = $text,
+                      r.user_id = $user_id,
+                      r.visit_keywords = $visit_keywords
+        """,
+        **review
+    )
 
 def process_review(session, review):
-    """한 가게의 리뷰를 처리합니다."""
-
+    """리뷰 데이터를 처리합니다."""
     try:
-        session.execute_write(insert_review_node, review)
+        session.execute_write(insert_reviews_node, review)
     except Exception as e:
-        print(f"리뷰 적재 중 오류 발생 - Store ID {store_id}: {e}")
+        print(f"리뷰 적재 중 오류 발생 - Store ID {review['storeId']}: {e}")
 
-def insert_reviews_in_batches(processed_data, batch_size=10, max_workers=4):
+def insert_reviews_in_batches(processed_data, batch_size=100, max_workers=4):
     """배치 단위로 데이터를 처리합니다."""
     total_batches = (len(processed_data) + batch_size - 1) // batch_size
 
@@ -64,13 +65,13 @@ def insert_reviews_in_batches(processed_data, batch_size=10, max_workers=4):
                     future.result()
                 except Exception as e:
                     print(f"배치 처리 중 오류 발생: {e}")
-    
+
 # JSON 파일 경로 설정
 json_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'naver-map-results-preprocessed.json')
 
 # 데이터 전처리 및 리뷰 적재 실행
 processed_data = preprocess_data(json_file_path)
-insert_reviews_in_batches(processed_data, batch_size=10, max_workers=4)
+insert_reviews_in_batches(processed_data, batch_size=100, max_workers=4)
 
 # 드라이버 연결 닫기
 driver.close()
