@@ -103,7 +103,7 @@ CALL apoc.periodic.iterate(
     MERGE (c:City {name: city})
 
     WITH s, c, region
-    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리"
+    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면면"
     MERGE (r:Region {name: region})
     MERGE (c)-[:HAS_REGION]->(r)
 
@@ -136,7 +136,7 @@ CALL apoc.periodic.iterate(
     MERGE (c:City {name: city})
 
     WITH s, c, region
-    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리"
+    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면"
     MERGE (r:Region {name: region})
     MERGE (c)-[:HAS_REGION]->(r)
 
