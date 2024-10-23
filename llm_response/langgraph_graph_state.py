@@ -8,7 +8,7 @@ class GraphState(TypedDict):
     intent : List[str]
 
     t2c_for_search : str
-    retrieval_result_for_search : str
+    record_dict_lst : List[Dict]
 
     messages : List[Dict]
     candidate: List[str]

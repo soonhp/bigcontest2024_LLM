@@ -27,7 +27,7 @@ workflow.add_node("route_and_intent_analysis", lambda state: route_and_intent_an
 ## Search query nodes
 workflow.add_node("text_to_cypher_for_search", lambda state: text_to_cypher_for_search(llm, state))
 workflow.add_node("retrieve_for_search_cypher", lambda state: retrieve_for_search_cypher(graphdb_driver, state))
-workflow.add_node("final_formatting_for_search", lambda state: final_formatting_for_search(llm, state))
+workflow.add_node("final_formatting_for_search", lambda state: final_formatting_for_search(llm, graphdb_driver, state))
 
 ## Recomm query nodes
 workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm, store_retriever_rev_emb, state))

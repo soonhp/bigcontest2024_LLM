@@ -9,15 +9,14 @@ def retrieve_for_search_cypher(graphdb_driver, state:GraphState):
         print(f"summary : \n{summary}")
         print(f"keys : \n{keys}")
 
-        record_str_lst = []
+        record_dict_lst = []
         for record in records:
-            record_str_lst.append(", ".join([f"{k} : {v}" for k, v in record.items()]))
-        search_result = '\n'.join(record_str_lst)
-        print(search_result)
+            record_dict_lst.append(dict(record))
+        print(f"record_dict_lst : {record_dict_lst}")
 
-        state['retrieval_result_for_search'] = search_result
+        state['record_dict_lst'] = record_dict_lst
     except ServiceUnavailable:
-        state['retrieval_result_for_search'] = """Retrieval failed because of the database connection issue temporally.
+        state['record_dict_lst'] = """Retrieval failed because of the database connection issue temporally.
         Make your own answer for not providing information that sorry about this.."""
 
     return state

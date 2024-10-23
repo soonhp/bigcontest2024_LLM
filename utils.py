@@ -33,7 +33,6 @@ def get_candidate_str(candidates):
     for r in candidates:
         if r.metadata['pk'] not in [d.metadata['pk'] for d in drop_dup]:
             drop_dup.append(r)
-    drop_dup
 
     candidates_str = ''
     for d in drop_dup:
@@ -57,6 +56,9 @@ def get_candidate_str(candidates):
             ratings_lst.append(f"{platform} {pf_rating}({pf_rc}명)")
         rating_str = ', '.join(ratings_lst)
         candidates_str += f"평점 : {rating_str}\n"
+        # 주소
+        if 'store_Addr' in d.metadata:
+            candidates_str += f"주소 : {d.metadata['store_Addr']}\n"
         # 음식 유형
         if 'store_Type' in d.metadata:
             candidates_str += f"음식 유형 : {d.metadata['store_Type']}\n"
