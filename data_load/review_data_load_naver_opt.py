@@ -39,8 +39,6 @@ def insert_reviews_node(tx, reviews):
         tx.run(
             """
             MERGE (r:Review:Naver {id: $reviewId, source: "Naver", storePk: toInteger($storeId), text:$text, user_id:$user_id, visit_keywords:$visit_keywords})
-
-            MERGE (s)-[:HAS_REVIEW]->(r)
             """,
             **review
         )
