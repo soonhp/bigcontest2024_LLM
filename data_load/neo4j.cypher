@@ -169,3 +169,9 @@ CALL apoc.periodic.iterate(
   {batchSize: 10000, parallel: true}
 );
 
+# STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
+match (s:STORE) set s:Shinhan
+match (s:MONTH) set s:Shinhan
+match (s:Region) set s:Shinhan
+match (s:City) set s:Shinhan;
+
