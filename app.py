@@ -10,8 +10,13 @@ from llm_response.langgraph_app import app, GraphState
 from langchain_core.runnables import RunnableConfig
 
 
-
-st.title("\"잘도 맛있수다!\"가 절로 나오는 제주도 맛집 추천! 🍊🍊")
+st.title("혼저 옵서예!👋")
+st.subheader("\"잘도 맛있수다!\"가 절로 나오는 제주도 맛집 추천 🍊")
+st.write("")
+st.write("여행 구성원 유형(가족, 친구 등) 및 연령대에 맞춘 제주도 맛집 추천해드려요")
+st.write("")
+with st.sidebar:
+    st.title("🍊참신한! 제주 맛집")
 
 # Store LLM generated responses
 if "messages" not in st.session_state.keys():
@@ -51,7 +56,8 @@ if st.session_state.messages[-1]["role"] != "assistant":
             #     r.metadata['Nearby tourist attractions'] = {"성산일출봉":"10분이내 거리", "섭지코지":"20분이내 거리"}
 
             # ai_msg = get_llm_response(query, response)
-            placeholder.markdown(result_gs['final_answer'])
+            if result_gs['final_answer']:
+                placeholder.markdown(result_gs['final_answer'], unsafe_allow_html=True)
 
     message = {"role": "assistant", "content": result_gs['final_answer']}
     st.session_state.messages.append(message)
