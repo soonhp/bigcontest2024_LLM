@@ -69,7 +69,7 @@ WHERE c.name = '제주시'
 WITH s, u.RC_M12_AGE_30_CUS_CNT_RAT AS age_30_ratio
 RETURN s.MCT_NM, age_30_ratio
 ORDER BY age_30_ratio DESC
-LIMIT 1"""    
+LIMIT 1""",    
     """USER INPUT: '제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은 곳은?' QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
 WHERE c.name = '제주시'
   AND r.name = '한림읍'
@@ -113,7 +113,7 @@ WHERE c.name = '제주시'
 WITH s, u.RC_M12_AGE_30_CUS_CNT_RAT AS age_30_ratio
 RETURN s.MCT_NM, age_30_ratio
 ORDER BY age_30_ratio DESC
-LIMIT 1"""    
+LIMIT 1""",    
     """USER INPUT: '서귀포시 안덕면의 중국집에서 가장 높은 화요일 이용 비중인 곳은?' QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
 WHERE c.name = '서귀포시'
   AND r.name = '안덕면'
