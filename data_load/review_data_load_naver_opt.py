@@ -83,7 +83,7 @@ json_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 
 
 # 데이터 전처리 및 리뷰 적재 실행
 processed_data = preprocess_data(json_file_path)
-insert_data_in_batches(processed_data, batch_size=10, max_workers=4)
+insert_data_in_batches(processed_data, batch_size=5, max_workers=2)
 
 # 드라이버 연결 닫기
 driver.close()

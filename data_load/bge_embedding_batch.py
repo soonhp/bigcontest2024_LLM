@@ -13,7 +13,7 @@ username = os.environ["NEO4J_USERNAME"]
 password = os.environ["NEO4J_PASSWORD"]
 
 # Initialize the Neo4j driver
-driver = GraphDatabase.driver(uri, auth=(username, password))
+driver = GraphDatabase.driver(uri, auth=(username, password), max_connection_lifetime=200)
 
 # Download the model and move it to GPU for faster computation
 model = SentenceTransformer("upskyy/bge-m3-korean").to('cuda')
@@ -27,9 +27,9 @@ def update_review_embeddings(batch_size=1024, update_batch_size=100):
         results_list = list(results)
 
         # Thread pool for concurrent Neo4j updates
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=1) as executor:
             # Batch processing for embeddings
-            for i in tqdm(range(0, len(results_list), batch_size), desc="Updating Embeddings"):
+            for i in tqdm(range(0, len(results_list), batch_size), desc="Updating Embeddings"): 
                 batch_records = results_list[i:i + batch_size]
 
                 # Prepare texts and ids for the batch
@@ -61,7 +61,7 @@ def update_neo4j_batch(batch_records, batch_embeddings, session):
         session.run(update_query, review_id=review_id, store_pk=store_pk, embedding=embedding_list)
 
 # Run the embedding update function
-update_review_embeddings(batch_size=256, update_batch_size=25)
+update_review_embeddings(batch_size=1, update_batch_size=1)
 
 # Close the driver connection
 driver.close()
