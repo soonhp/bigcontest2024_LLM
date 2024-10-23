@@ -5,7 +5,14 @@ from tqdm import tqdm
 import os
 import time
 
+from dotenv import load_dotenv
 
+
+# 환경 변수 설정
+load_dotenv()
+neo4j_url = os.getenv("NEO4J_URI")
+neo4j_user = os.getenv("NEO4J_USERNAME")
+neo4j_password = os.getenv("NEO4J_PASSWORD")
 
 driver = GraphDatabase.driver(neo4j_url, auth=(neo4j_user, neo4j_password))
 
@@ -81,7 +88,7 @@ def insert_data_in_batches(processed_data, batch_size=10):
         print(f"Batch {i // batch_size + 1}/{total_batches} processed in {end_time - start_time:.2f} seconds")
 
 # JSON 파일 경로와 배치 사이즈 설정
-json_file_path = 'naver-map-results-preprocessed.json'
+json_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'naver-map-results-preprocessed.json')
 batch_size = 10
 
 # 데이터 전처리 및 적재 실행
