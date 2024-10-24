@@ -91,6 +91,9 @@ SET r.text = reviewData.review,
     r.user_id = reviewData.user_id
 MERGE (s)-[:HAS_REVIEW]->(r);
 
+// city, region 노드의 name 속성값 제약 조건(중복 방지)
+CREATE CONSTRAINT unique_city FOR (c:City) REQUIRE c.name IS UNIQUE
+CREATE CONSTRAINT unique_region FOR (r:Region) REQUIRE r.name IS UNIQUE;
 
 // 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 STORE 노드 연결
 CALL apoc.periodic.iterate(
