@@ -5,6 +5,7 @@ from tqdm import tqdm
 from dotenv import load_dotenv, find_dotenv
 import torch
 from concurrent.futures import ThreadPoolExecutor
+import time
 
 load_dotenv(find_dotenv())
 
@@ -29,6 +30,7 @@ def update_review_embeddings(batch_size=1024, update_batch_size=100):
         # Thread pool for concurrent Neo4j updates
         with ThreadPoolExecutor(max_workers=1) as executor:
             # Batch processing for embeddings
+            futures = []  # Future 객체를 저장할 리스트
             for i in tqdm(range(0, len(results_list), batch_size), desc="Updating Embeddings"): 
                 batch_records = results_list[i:i + batch_size]
 
@@ -45,7 +47,19 @@ def update_review_embeddings(batch_size=1024, update_batch_size=100):
                     update_batch_embeddings = embeddings[j:j + update_batch_size]
 
                     # Use a separate thread to update Neo4j in batches
-                    executor.submit(update_neo4j_batch, update_batch_records, update_batch_embeddings, session)
+                    future = executor.submit(update_neo4j_batch, update_batch_records, update_batch_embeddings, session)
+                    futures.append(future)  # Future 객체를 리스트에 추가
+            # 모든 Future 객체의 상태를 확인하고 완료될 때까지 대기
+            for j, future in enumerate(futures):
+                future.result()  # 실제로 적재가 완료될 때까지 대기
+                # 적재가 완료되었는지 확인하기 위해 로그를 출력
+                if future.done() and not future.exception():
+                    print(f"Batch starting at index {i} successfully updated.")
+                else:
+                    print(f"Batch starting at index {i} encountered an error.")
+
+        # 데이터가 실제로 적재되었는지 확인하는 코드 추가
+        check_embeddings(session)
 
 # Function to update a batch of embeddings in Neo4j
 def update_neo4j_batch(batch_records, batch_embeddings, session):
@@ -60,8 +74,19 @@ def update_neo4j_batch(batch_records, batch_embeddings, session):
         """
         session.run(update_query, review_id=review_id, store_pk=store_pk, embedding=embedding_list)
 
+    # 매 배치마다 적재가 되었는지 확인하는 코드 추가
+    check_embeddings(session)  # 적재된 임베딩 수를 확인
+    print(f"Batch with {len(batch_records)} records updated successfully.")
+
+# 데이터가 실제로 적재되었는지 확인하는 함수
+def check_embeddings(session):
+    query = "MATCH (r:Review) WHERE r.textEmbedding IS NOT NULL RETURN COUNT(r) AS count"
+    result = session.run(query)
+    count = result.single()["count"]
+    print(f"Total reviews with embeddings: {count}")
+
 # Run the embedding update function
-update_review_embeddings(batch_size=1, update_batch_size=1)
+update_review_embeddings(batch_size=512, update_batch_size=1)
 
 # Close the driver connection
 driver.close()
