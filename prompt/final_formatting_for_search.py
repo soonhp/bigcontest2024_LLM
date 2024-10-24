@@ -11,6 +11,7 @@ search result : {search_result}
 - Elaborate on how the result was obtained and explain the reasons behind it (explained step by step).
 - Use simple and friendly language that is easy for a general audience to understand.
 - Exclude any mention of the Cypher query.
+- If the search result has no value, respond with "not found".
 - Do not use asterisks for emphasis, and respond in Korean.
 
 """

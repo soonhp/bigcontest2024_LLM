@@ -59,6 +59,30 @@ The relationships:
 (:STORE)-[:USE]->(:MONTH)"""
 
 
+# 초안
+EXAMPLES_Draft = [ 
+"""USER INPUT: '제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은 곳은?' 
+QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+WHERE c.name = '제주시'
+  AND r.name = '한림읍'
+  AND s.MCT_TYPE = "커피"
+WITH s, avg(u.RC_M12_AGE_30_CUS_CNT_RAT) AS avg_age_30_ratio
+RETURN s.MCT_NM, avg_age_30_ratio
+ORDER BY avg_age_30_ratio DESC
+LIMIT 1""",
+"""USER INPUT: '제주시 노형동에 있는 단품요리 전문점 중 이용건수가 상위 10%에 속하고 현지인 이용 비중이 가장 높은 다섯 곳은?' 
+QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+WHERE c.name = '제주시'
+  AND r.name = '노형동'
+  AND s.MCT_TYPE = '단품요리 전문'
+  AND u.UE_CNT_GRP = '상위 10% 이하'
+WITH s, avg(u.LOCAL_UE_CNT_RAT) AS avg_local_ratio
+RETURN s.MCT_NM, avg_local_ratio
+ORDER BY avg_local_ratio DESC
+LIMIT 5
+"""
+]
+
 # 예제 생성 기준 : 연월포함(1), 연월미포함(2) - 수치형[평균], 범주형[최근], 어려운질문(1)
 EXAMPLES = [
     """USER INPUT: '23년 10월 기준으로 제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은곳은 ?' QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
@@ -101,7 +125,6 @@ RETURN s.MCT_NM, avg_age_30_ratio
 ORDER BY avg_age_30_ratio DESC
 LIMIT 2"""
 ]
-
 
 # (v2) 예제 생성 기준 : 연월포함(1), 연월미포함(2) - 수치형[평균], 범주형[최근], 어려운질문(1) > 최대한 안겹치게 예제 수정
 EXAMPLES_v2 = [
@@ -162,6 +185,6 @@ Input:
 
 Never use any properties or relationships not included in the schema.
 Never include triple backticks ```.
-Add an appropriate LIMIT clause.
+Add an appropriate LIMIT clause for the user input.
 
 Cypher query:"""
