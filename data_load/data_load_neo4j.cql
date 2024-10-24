@@ -115,7 +115,7 @@ CALL apoc.periodic.iterate(
 
   // 관계 중복 방지: 이미 연결된 경우 관계 생략
   MERGE (c)-[:HAS_REGION]->(r)
-  MERGE (r)-[:HAS_ATTR]->(s)
+  MERGE (r)-[:HAS_STORE]->(s)
   ',
   {batchSize: 1000, parallel: true}
 );
