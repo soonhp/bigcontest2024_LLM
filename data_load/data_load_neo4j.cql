@@ -94,23 +94,32 @@ MERGE (s)-[:HAS_REVIEW]->(r);
 
 // 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 STORE 노드 연결
 CALL apoc.periodic.iterate(
-    'MATCH (s:STORE) WHERE s.ADDR IS NOT NULL RETURN s, split(s.ADDR, " ") AS addrParts',
-    '
-    WITH s, addrParts
-    WHERE size(addrParts) > 2
-    WITH s, addrParts[1] AS city, addrParts[2] AS region
+  '
+  MATCH (s:STORE) 
+  WHERE s.ADDR IS NOT NULL 
+  RETURN s, split(s.ADDR, " ") AS addrParts
+  ',
+  '
+  WITH s, addrParts
+  WHERE size(addrParts) > 2
+  WITH s, trim(addrParts[1]) AS city, trim(addrParts[2]) AS region
 
-    MERGE (c:City {name: city})
+  // 중복 방지: 동일한 City 노드가 존재하면 재사용
+  MERGE (c:City {name: city})
 
-    WITH s, c, region
-    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면"
-    MERGE (r:Region {name: region})
-    MERGE (c)-[:HAS_REGION]->(r)
+  WITH s, c, region
+  WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면"
 
-    MERGE (r)-[:HAS_STORE]->(s)
-    ',
-    {batchSize: 1000, parallel: true}
+  // 중복 방지: 동일한 Region 노드가 존재하면 재사용
+  MERGE (r:Region {name: region})
+
+  // 관계 중복 방지: 이미 연결된 경우 관계 생략
+  MERGE (c)-[:HAS_REGION]->(r)
+  MERGE (r)-[:HAS_ATTR]->(s)
+  ',
+  {batchSize: 1000, parallel: true}
 );
+
 
 // 관광지 ATTR 노드 생성
 LOAD CSV WITH HEADERS FROM "file:///old_addr_real_final.csv" AS row
@@ -127,23 +136,32 @@ REQUIRE a.pk IS UNIQUE;
 
 // 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 ATTR 노드 연결
 CALL apoc.periodic.iterate(
-    'MATCH (s:ATTR) WHERE s.ADDR IS NOT NULL RETURN s, split(s.ADDR, " ") AS addrParts',
-    '
-    WITH s, addrParts
-    WHERE size(addrParts) > 2
-    WITH s, addrParts[1] AS city, addrParts[2] AS region
+  '
+  MATCH (s:ATTR) 
+  WHERE s.ADDR IS NOT NULL 
+  RETURN s, split(s.ADDR, " ") AS addrParts
+  ',
+  '
+  WITH s, addrParts
+  WHERE size(addrParts) > 2
+  WITH s, trim(addrParts[1]) AS city, trim(addrParts[2]) AS region
 
-    MERGE (c:City {name: city})
+  // 중복 방지: 동일한 City 노드가 존재하면 재사용
+  MERGE (c:City {name: city})
 
-    WITH s, c, region
-    WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면"
-    MERGE (r:Region {name: region})
-    MERGE (c)-[:HAS_REGION]->(r)
+  WITH s, c, region
+  WHERE region CONTAINS "동" OR region CONTAINS "읍" OR region CONTAINS "리" OR region CONTAINS "면"
 
-    MERGE (r)-[:HAS_ATTR]->(s)
-    ',
-    {batchSize: 1000, parallel: true}
+  // 중복 방지: 동일한 Region 노드가 존재하면 재사용
+  MERGE (r:Region {name: region})
+
+  // 관계 중복 방지: 이미 연결된 경우 관계 생략
+  MERGE (c)-[:HAS_REGION]->(r)
+  MERGE (r)-[:HAS_ATTR]->(s)
+  ',
+  {batchSize: 1000, parallel: true}
 );
+
 
 # review data Load JSON data using APOC -> 최적화
 CALL apoc.periodic.iterate(
