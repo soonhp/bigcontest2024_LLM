@@ -190,9 +190,22 @@ CALL apoc.periodic.iterate(
   {batchSize: 10000, parallel: true}
 );
 
-# STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
+// STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
 match (s:STORE) set s:Shinhan
 match (s:MONTH) set s:Shinhan
 match (s:Region) set s:Shinhan
 match (s:City) set s:Shinhan;
+
+// STORE 별로 가까운 ATTR(관광지) TOP-3 엣지(연결) NEAR 부여 
+:auto LOAD CSV WITH HEADERS FROM 'file:///nearest_attractions_combined.csv' AS row
+CALL {
+WITH row
+MATCH (s:STORE {pk: toInteger(row.storePk)})
+MATCH (a:ATTR {AREA_NM: row.AREA_NM, ADDR:row.Old_ADDR})
+MERGE (s)-[n:NEAR]->(a)
+ON CREATE SET
+    n.latitude = toFloat(row.Latitude),
+    n.longitude = toFloat(row.Longitude),
+    n.distance = toFloat(row.Distance)
+} IN TRANSACTIONS OF 1000 ROWS
 
