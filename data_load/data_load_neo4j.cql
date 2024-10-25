@@ -238,3 +238,16 @@ OPTIONS { indexConfig: {
  `vector.similarity_function`: 'cosine'
 }}
 
+// visit_keyword 서치 방식에 해당하는 REVIEW 노드 레이블 지정
+MATCH (r:Review:Naver)
+WHERE r.GraphEmbedding is not null
+set r:RoutingForMember
+    
+/// visit_keyword 방식 서치 REVIEW 노드의 textEmbedding 속성 벡터 인덱싱 querygraphVector 추가
+CREATE VECTOR INDEX querygraphVector IF NOT EXISTS
+FOR (r:RoutingForMember)
+ON r.textEmbedding
+OPTIONS { indexConfig: {
+ `vector.dimensions`: 1024,
+ `vector.similarity_function`: 'cosine'
+}}
