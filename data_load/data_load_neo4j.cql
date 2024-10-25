@@ -212,6 +212,7 @@ ON CREATE SET
 // GraphEmbedding  
 /// REVIEW, STORE 노드의 GraphEmbedding 속성 벡터 인덱싱을 위해 각각 GraphEmb 레이블 추가
 MATCH (n:Review:Naver)
+where n.GraphEmbedding is not null
 set n:GraphEmb
 
 match (n:STORE)
