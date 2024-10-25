@@ -28,7 +28,7 @@ def update_review_embeddings(batch_size=1024, update_batch_size=100):
         results_list = list(results)
 
         # Thread pool for concurrent Neo4j updates
-        with ThreadPoolExecutor(max_workers=1) as executor:
+        with ThreadPoolExecutor(max_workers=4) as executor:
             # Batch processing for embeddings
             futures = []  # Future 객체를 저장할 리스트
             for i in tqdm(range(0, len(results_list), batch_size), desc="Updating Embeddings"): 
@@ -49,6 +49,8 @@ def update_review_embeddings(batch_size=1024, update_batch_size=100):
                     # Use a separate thread to update Neo4j in batches
                     future = executor.submit(update_neo4j_batch, update_batch_records, update_batch_embeddings, session)
                     futures.append(future)  # Future 객체를 리스트에 추가
+                    # 각 업데이트 사이에 0.5초 대기
+                    time.sleep(0.5)  # 추가된 코드
             # 모든 Future 객체의 상태를 확인하고 완료될 때까지 대기
             for j, future in enumerate(futures):
                 future.result()  # 실제로 적재가 완료될 때까지 대기
@@ -86,7 +88,7 @@ def check_embeddings(session):
     print(f"Total reviews with embeddings: {count}")
 
 # Run the embedding update function
-update_review_embeddings(batch_size=512, update_batch_size=1)
+update_review_embeddings(batch_size=3, update_batch_size=3)
 
 # Close the driver connection
 driver.close()
