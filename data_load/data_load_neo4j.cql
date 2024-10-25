@@ -209,3 +209,12 @@ ON CREATE SET
     n.distance = toFloat(row.Distance)
 } IN TRANSACTIONS OF 1000 ROWS
 
+// REVIEW, STORE 노드의 GraphEmbedding 속성 벡터 인덱싱을 위해 각각 GraphEmb 레이블 추가
+MATCH (n:Review:Naver)
+set n:GraphEmb
+
+MATCH (n:STORE)
+WHERE n.image_url_naver is not null
+set n:GraphEmb
+
+
