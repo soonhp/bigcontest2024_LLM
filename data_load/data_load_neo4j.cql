@@ -214,8 +214,8 @@ ON CREATE SET
 MATCH (n:Review:Naver)
 set n:GraphEmb
 
-MATCH (n:STORE)
-WHERE n.image_url_naver is not null
+match (n:STORE)
+where n.GraphEmbedding is not null
 set n:GraphEmb
 
 /// REVIEW, STORE 노드의 GraphEmbedding 속성 벡터 인덱싱 GraphEmbed 추가
