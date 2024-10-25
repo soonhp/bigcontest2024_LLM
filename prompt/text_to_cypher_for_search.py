@@ -151,6 +151,8 @@ EXAMPLES_COMBINED = '\n'.join(EXAMPLES_v2) if EXAMPLES_v2 else ''
 
 TEXT_TO_CYPHER_FOR_SEARCH_TEMPLATE = """Task: Generate a Cypher statement for querying a Neo4j graph database from a user input.
 
+- Do not use STORE.MCT_TYPE and Visit_with.name beyond the provided examples, and try to find the closest match.
+
 Schema:
 {NEO4J_SCHEMA}
 

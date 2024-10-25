@@ -75,7 +75,7 @@ def get_candidate_str(candidates):
             candidates_str += f"예약 필요 여부 통계 : {use_how_str}\n"
         # 메뉴
         if 'menu' in d.metadata:
-            candidates_str += f"메뉴 : {d.metadata['menu']}\n"
+            candidates_str += f"메뉴 : {d.metadata['menu'][:100]}\n"
 
         candidates_str += '\n'
     return candidates_str
