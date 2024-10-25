@@ -190,6 +190,16 @@ CALL apoc.periodic.iterate(
   {batchSize: 10000, parallel: true}
 );
 
+
+/// REVIEW 노드의 textEmbedding 속성 벡터 인덱싱 queryVector 추가
+CREATE VECTOR INDEX queryVector IF NOT EXISTS
+FOR (r:Review)
+ON r.textEmbedding
+OPTIONS { indexConfig: {
+ `vector.dimensions`: 1024,
+ `vector.similarity_function`: 'cosine'
+}}
+
 // STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
 match (s:STORE) set s:Shinhan
 match (s:MONTH) set s:Shinhan
