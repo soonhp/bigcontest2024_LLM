@@ -1,4 +1,6 @@
-// Review와 STORE 노드의 Visit_with(구성원) 노드 연결관계를 기반으로 FastRP 그래프 임베딩 생성 Cypher 쿼리
+/////// Visit_keyword로 변경!!
+
+// Review와 STORE 노드의 Visit_keyword(구성원+목적) 노드 연결관계를 기반으로 FastRP 그래프 임베딩 생성 Cypher 쿼리
 
 // Review 노드의 visit_keywords 속성값에서 구성원 관련 정보 추출하여 Visit_with 라는 노드 생성하여 연결
 :auto CALL {
@@ -25,6 +27,29 @@ MERGE (s)-[:HAS_VISIT_KEYWORD]->(v);  // 관계 생성
 MATCH (n:Visit_with) where n.keyword="" detach delete n;
 MATCH (n:Visit_with) where n.keyword="기타" detach delete n;
 
+
+// Review 노드의 visit_keywords 속성값에서 목적(purpose) 관련 정보 추출하여 Visit_purpose 라는 노드 생성하여 연결
+:auto CALL {
+    MATCH (r:Review:Naver)
+    WHERE r.visit_keywords is not null
+    WITH r, split(r.visit_keywords, ',') AS visit_keywords
+    UNWIND visit_keywords AS keyword
+    WITH r, TRIM(keyword) AS cleaned_keyword
+    WHERE cleaned_keyword IN ["친목", "기념일", "나들이", "여행", "회식", "데이트", "비즈니스", "일상", "가족모임"]
+    MERGE (v:Visit_purpose:Visit_keyword {keyword: cleaned_keyword})
+    MERGE (r)-[:HAS_VISIT_KEYWORD]->(v)
+} IN TRANSACTIONS OF 1000 ROWS;
+
+// STORE 노드의 purpose 속성값에서 목적(purpose) 관련 정보 추출하여 Visit_purpose 라는 노드 생성하여 연결
+MATCH (s:STORE)
+WHERE s.purpose is not null // visit_with 속성이 있는 노드만 선택
+WITH s, split(s.purpose, ',') AS visit_members
+UNWIND visit_members AS purpose
+WITH s, trim(purpose) AS clean_purpose  // 공백 제거 후 member 준비
+MERGE (v:Visit_purpose:Visit_keyword {keyword: clean_purpose})  // 중복 방지
+MERGE (s)-[:HAS_VISIT_KEYWORD]->(v);  // 관계 생성
+
+
 // gds 라이브러리를 통해 FastRP 노드 임베딩 생성
 CALL gds.graph.project(
     'csgraph',
@@ -45,27 +70,5 @@ CALL gds.graph.nodeProperties.write('csgraph',['GraphEmbedding'])
 YIELD propertiesWritten
 
 
-
-
-/////// Visit_keyword로 변경!!
-
-MATCH (s:STORE)
-WHERE s.purpose is not null // visit_with 속성이 있는 노드만 선택
-WITH s, split(s.purpose, ',') AS visit_members
-UNWIND visit_members AS purpose
-WITH s, trim(purpose) AS clean_purpose  // 공백 제거 후 member 준비
-MERGE (v:Visit_purpose:Visit_keyword {keyword: clean_purpose})  // 중복 방지
-MERGE (s)-[:HAS_VISIT_KEYWORD]->(v);  // 관계 생성
-
-:auto CALL {
-    MATCH (r:Review:Naver)
-    WHERE r.visit_keywords is not null
-    WITH r, split(r.visit_keywords, ',') AS visit_keywords
-    UNWIND visit_keywords AS keyword
-    WITH r, TRIM(keyword) AS cleaned_keyword
-    WHERE cleaned_keyword IN ["친목", "기념일", "나들이", "여행", "회식", "데이트", "비즈니스", "일상", "가족모임"]
-    MERGE (v:Visit_purpose:Visit_keyword {keyword: cleaned_keyword})
-    MERGE (r)-[:HAS_VISIT_KEYWORD]->(v)
-} IN TRANSACTIONS OF 1000 ROWS;
 
 
