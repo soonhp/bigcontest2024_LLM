@@ -91,6 +91,9 @@ SET r.text = reviewData.review,
     r.user_id = reviewData.user_id
 MERGE (s)-[:HAS_REVIEW]->(r);
 
+// city, region 노드의 name 속성값 제약 조건(중복 방지)
+CREATE CONSTRAINT unique_city FOR (c:City) REQUIRE c.name IS UNIQUE
+CREATE CONSTRAINT unique_region FOR (r:Region) REQUIRE r.name IS UNIQUE;
 
 // 시, [동,읍,리] 주소 파싱하여 Hierarchy 구조로 STORE 노드 연결
 CALL apoc.periodic.iterate(
@@ -115,7 +118,7 @@ CALL apoc.periodic.iterate(
 
   // 관계 중복 방지: 이미 연결된 경우 관계 생략
   MERGE (c)-[:HAS_REGION]->(r)
-  MERGE (r)-[:HAS_ATTR]->(s)
+  MERGE (r)-[:HAS_STORE]->(s)
   ',
   {batchSize: 1000, parallel: true}
 );
@@ -187,9 +190,22 @@ CALL apoc.periodic.iterate(
   {batchSize: 10000, parallel: true}
 );
 
-# STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
+// STORE, MONTH, City, Region 노드 레이블에 Shinhan 레이블 추가
 match (s:STORE) set s:Shinhan
 match (s:MONTH) set s:Shinhan
 match (s:Region) set s:Shinhan
 match (s:City) set s:Shinhan;
+
+// STORE 별로 가까운 ATTR(관광지) TOP-3 엣지(연결) NEAR 부여 
+:auto LOAD CSV WITH HEADERS FROM 'file:///nearest_attractions_combined.csv' AS row
+CALL {
+WITH row
+MATCH (s:STORE {pk: toInteger(row.storePk)})
+MATCH (a:ATTR {AREA_NM: row.AREA_NM, ADDR:row.Old_ADDR})
+MERGE (s)-[n:NEAR]->(a)
+ON CREATE SET
+    n.latitude = toFloat(row.Latitude),
+    n.longitude = toFloat(row.Longitude),
+    n.distance = toFloat(row.Distance)
+} IN TRANSACTIONS OF 1000 ROWS
 
