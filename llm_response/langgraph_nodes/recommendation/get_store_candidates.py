@@ -6,6 +6,7 @@ import re
 
 from prompt.text_to_cypher_for_recomm import EXAMPLES_COMBINED, NEO4J_SCHEMA_RECOMM, TEXT_TO_CYPHER_FOR_RECOMM_TEMPLATE
 from utils import get_candidate_str
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 
 
