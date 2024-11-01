@@ -17,6 +17,7 @@ from llm_response.langgraph_nodes.search.text_to_cypher_for_search import text_t
 
 llm = get_llm_model()
 store_retriever_rev_emb = get_neo4j_vector().as_retriever(search_kwargs={"k": CONFIG.store_retriever_rev_emb_k})
+store_retriever_grp_emb = get_neo4j_vector().as_retriever(search_kwargs={"k": CONFIG.store_retriever_rev_emb_k})
 
 workflow = StateGraph(GraphState)
 
