@@ -35,7 +35,7 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
     # Review similarity
     intent_guide = """
     <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);">
-        <h5 style="font-size: 16px; margin-bottom: 10px;">🔍 질문 의도 파악 및 알맞은 리뷰를 찾는 중...</h5>
+        <h5 style="font-size: 16px; margin-bottom: 10px;">🔍 질문 의도를 다음과 같이 파악했어요 🤖</h5>
         <ul style="list-style-type: none; padding-left: 0;">
     """
     review_candidates_lst = []
@@ -63,7 +63,7 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
 
     # Text2Cypher
     placeholder.markdown(
-        f"리뷰 검색 결과 {len(review_candidates_lst)}개, 데이터 베이스 검색중...",
+        f"> 리뷰 검색 결과 {len(review_candidates_lst)}개, 데이터 베이스 검색중...",
         unsafe_allow_html=True,
     )
     state = text_to_cypher_for_recomm(llm, state)
@@ -76,7 +76,10 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
     embedding_model = get_embedding_model()
     query_embedding = embedding_model.embed_query(state['query'])
     state['candidate_str'] += '\n'
+    t2c_candidates_cnt = 0
     for r in records_drop_dup:
+        if t2c_candidates_cnt == 3:
+            break
         r_keys = r.keys()
         one_record_str = ''
         for key in r_keys:
@@ -87,13 +90,18 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
                     reviews_lst = [f"{ri}. {review['text'][:100]}" for ri, review in enumerate(reviews, start=1)]
                     one_record_str += f"리뷰 : {', '.join(reviews_lst)}\n"
         if '리뷰' in one_record_str:
-            state["candidate_str"] += one_record_str
-    placeholder.markdown(
-        f"> 리뷰 검색 결과 후보 : {len(review_candidates_lst)}개, 데이터 베이스 검색 결과 후보 : { len(records_drop_dup)}개",
-        unsafe_allow_html=True,
-    )
+            t2c_candidates_cnt += 1
+            state["candidate_str"] += one_record_str + '\n'
+
+    place_holder_str = ''
+    if len(review_candidates_lst):
+        place_holder_str += f"> 리뷰 검색 결과 후보 : {len(review_candidates_lst)}개"
+    if t2c_candidates_cnt:
+        place_holder_str += f", 데이터 베이스 검색 결과 후보 : {t2c_candidates_cnt}개"
+    placeholder.markdown(place_holder_str, unsafe_allow_html=True)
+
     intent_guide += f"""  	</ul>
-<h5 style="font-size: 16px;">⏳ 질문 조건을 만족하는 {len(review_candidates_lst) + len(records)}개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
+<h5 style="font-size: 16px;">⏳ 질문 조건을 만족하는 {len(review_candidates_lst) + t2c_candidates_cnt}개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
 
 </div>"""
     st.markdown(intent_guide, unsafe_allow_html=True)

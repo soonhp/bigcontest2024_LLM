@@ -26,7 +26,7 @@ Review {
 }
 Visit_with
 {
-    member : STRING, ex) "부모님", "연인・배우자", "아이", "친구", "친척・형제", "지인・동료", "반려동물", "혼자"
+    keyword : STRING, ex) "부모님", "연인・배우자", "아이", "친구", "친척・형제", "지인・동료", "반려동물", "혼자"
 }
 
 Relationship properties:
@@ -70,8 +70,8 @@ The relationships:
 (:STORE)-[:USE]->(:MONTH)
 (:Region)-[:HAS_ATTR]->(:ATTR)
 (:STORE)-[:HAS_REVIEW]->(:Review)
-(:Review)-[:HAS_VISIT_WITH]->(:Visit_with)
-(:STORE)-[:HAS_VISIT_WITH]->(:Visit_with)
+(:Review)-[:HAS_VISIT_KEYWORD]->(:Visit_with)
+(:STORE)-[:HAS_VISIT_KEYWORD]->(:Visit_with)
 """
 
 EXAMPLES = [
@@ -92,7 +92,7 @@ WITH c, uzLat, uzLon, c.latitude AS cafeLat, c.longitude AS cafeLon
 RETURN c.pk AS pk, c.MCT_NM AS CafeName, c.ADDR AS Address, c.menu AS Menu, 
        point.distance(point({latitude: uzLat, longitude: uzLon}), point({latitude: cafeLat, longitude: cafeLon})) AS dist
 ORDER BY dist ASC
-LIMIT 5
+LIMIT 50
 """,
     """USER INPUT: 바다 보이는 횟집 추천해줘. 제주 신화월드 근처에 부모님 모시고 가기 좋은 집 추천해줘 QUERY: // 1. '신화'와 '월드' 두 단어를 모두 포함하는 관광지(ATTR) 찾기
 MATCH (a:ATTR)
@@ -100,7 +100,7 @@ WHERE a.AREA_NM CONTAINS "신화" AND a.AREA_NM CONTAINS "월드"  // '신화'�
 WITH a.latitude AS swLat, a.longitude AS swLon
 
 // 2. 신화월드 근처에 있는 일식 가게 찾기
-MATCH (rg:Region)-[:HAS_STORE]->(c:STORE)-[:HAS_VISIT_WITH]->(v:Visit_with)
+MATCH (rg:Region)-[:HAS_STORE]->(c:STORE)-[:HAS_VISIT_KEYWORD]->(v:Visit_with)
 WHERE c.MCT_TYPE = '일식'  // 일식 필터
 AND v.member CONTAINS "부모님"  // 부모님과 함께 방문한 기록이 있는 장소 필터
 
@@ -111,7 +111,7 @@ WITH c, swLat, swLon, c.latitude AS storeLat, c.longitude AS storeLon
 RETURN c.pk AS pk, c.MCT_NM AS RestaurantName, c.ADDR AS Address, c.menu AS Menu, 
        point.distance(point({latitude: swLat, longitude: swLon}), point({latitude: storeLat, longitude: storeLon})) AS Distance_in_meters_from_Jeju_Shinhwa_World
 ORDER BY Distance_in_meters_from_Jeju_Shinhwa_World ASC
-LIMIT 5
+LIMIT 50
 """,
     """USER INPUT: 8살 아이 포함 3인 가족 가기 좋은 평균가격 3만원대 패밀리 레스토랑 추천해줘 QUERY: // 1. 패밀리 레스토랑 중에서 가격 정보를 필터링
 MATCH (s:STORE)
@@ -123,11 +123,11 @@ AND ANY(menuItem IN split(s.menu, ", ")
 WITH s
 
 // 2. 아이와 함께 방문할 수 있는 곳 필터링
-MATCH (s)-[:HAS_VISIT_WITH]->(v:Visit_with)
+MATCH (s)-[:HAS_VISIT_KEYWORD]->(v:Visit_with)
 WHERE v.member CONTAINS '아이'
 RETURN s.pk AS pk, s.MCT_NM AS RestaurantName, s.ADDR AS Address, s.menu AS Menu, 
        s.MCT_TYPE AS RestaurantType, v.member AS VisitWith
-LIMIT 5
+LIMIT 50
 """,
     """USER INPUT: 제주 중문 근처에서 30대 혼자 여행객에게 적합한 1~2만원대 한식 메뉴를 제공하는 조용한 맛집을 추천해 주세요. 혼자 방문하기 편안한 곳이면 좋겠습니다 QUERY: // 1. '제주시' 또는 '서귀포시' 내에서 '중문'을 포함하는 지역 찾기
 MATCH (c:City)-[:HAS_REGION]->(rg:Region)
@@ -142,8 +142,8 @@ AND ANY(menuItem IN split(s.menu, ", ")
         WHERE toInteger(apoc.text.regreplace(menuItem, ".*:(\\d+)", "$1")) >= 10000 
         AND toInteger(apoc.text.regreplace(menuItem, ".*:(\\d+)", "$1")) < 20000)
 
-// 4. 혼자 방문하기 적합한 곳 필터링 (Visit_with의 여러 유형을 OR로 처리)
-MATCH (s)-[:HAS_VISIT_WITH]->(v:Visit_with)
+// 4. 혼자 방문하기 적합한 곳 필터링
+MATCH (s)-[:HAS_VISIT_KEYWORD]->(v:Visit_with)
 WHERE v.member CONTAINS '혼자'
 
 // 5. 30대 이용 비중을 기준으로 높은 순으로 정렬
@@ -153,7 +153,7 @@ ORDER BY Age30CustomerRatio DESC  // 30대 고객 비중이 높은 순으로 정
 // 6. 결과 출력 (pk 추가)
 RETURN s.pk AS pk, s.MCT_NM AS RestaurantName, s.ADDR AS Address, s.menu AS Menu, 
        VisitWith, Age30CustomerRatio
-LIMIT 5""",
+LIMIT 50""",
 ]
 
 EXAMPLES_COMBINED = '\n'.join(EXAMPLES) if EXAMPLES else ''

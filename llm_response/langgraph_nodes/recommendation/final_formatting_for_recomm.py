@@ -36,7 +36,7 @@ def final_formatting_for_recomm(graphdb_driver, state:GraphState):
     st.markdown('')
     st.markdown(state['selected_recommendations']['decorational_mention_start'])
     for rank, (node, pk_desc) in enumerate(zip(retrieved_stores_nodes, state['selected_recommendations']['recommendations']), start=1):
-        st.markdown(f"## {rank}. {node['MCT_NM']}")
+        st.markdown(f"#### {rank}. {node['MCT_NM']}")
         image_html = get_image_html_str(node)
         st.markdown(image_html, unsafe_allow_html=True)
         st.markdown('')
