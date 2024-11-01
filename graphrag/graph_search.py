@@ -63,7 +63,7 @@ RETURN node.text AS text,
 """
 embedding_model = get_embedding_model()  # 초기화된 모델을 재사용
 
-def get_neo4j_vector(index_name='querygraphVector'):
+def get_neo4j_vector_graph(index_name='querygraphVector'):
     return Neo4jVector.from_existing_index(
         embedding=embedding_model,
         url=neo4j_url,
