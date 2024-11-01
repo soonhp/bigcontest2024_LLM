@@ -25,7 +25,7 @@ if "messages" not in st.session_state.keys():
 # Display or clear chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.write(message["content"])
+        st.markdown(message["content"], unsafe_allow_html=True)
 
 def clear_chat_history():
     st.session_state.messages = [{"role": "assistant", "content": "어드런 식당 찾으시쿠과?"}]
@@ -43,21 +43,22 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             # LangGraph
             gs = GraphState(query=query, messages=st.session_state.messages)
+            print(f"gs.keys() : {gs.keys()}")
             result_gs = app.invoke(gs, config=config)
 
             # response = retrieve_store_nodes(query)
             # print(f"response : \n{response}")
 
             placeholder = st.empty()
-            
-            # 임의로 response 추가 : 나중에 데이터 적재되면 활용할 예정            
+
+            # 임의로 response 추가 : 나중에 데이터 적재되면 활용할 예정
             # for r in response :
             #     r.metadata['menu'] = {"메뉴1":"20000", "메뉴2":"25000"}
             #     r.metadata['Nearby tourist attractions'] = {"성산일출봉":"10분이내 거리", "섭지코지":"20분이내 거리"}
 
             # ai_msg = get_llm_response(query, response)
-            if result_gs['final_answer']:
-                placeholder.markdown(result_gs['final_answer'], unsafe_allow_html=True)
-
-    message = {"role": "assistant", "content": result_gs['final_answer']}
-    st.session_state.messages.append(message)
+            # if result_gs['final_answer']:
+                # placeholder.markdown(result_gs['final_answer'], unsafe_allow_html=True)
+    if result_gs['final_answer']:
+        message = {"role": "assistant", "content": result_gs['final_answer']}
+        st.session_state.messages.append(message)

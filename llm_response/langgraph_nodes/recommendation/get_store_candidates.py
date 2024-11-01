@@ -105,6 +105,8 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
 
 </div>"""
     st.markdown(intent_guide, unsafe_allow_html=True)
+    print(f"{state.keys()}")
+    state["final_answer"] = intent_guide + '\n'
 
     return state
 
