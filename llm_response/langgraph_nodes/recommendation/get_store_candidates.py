@@ -61,6 +61,8 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
 
     state['candidate_str'] = get_candidate_str(review_candidates_lst)
 
+    # GraphEmbedding similarity
+
     # Text2Cypher
     placeholder.markdown(
         f"> 리뷰 검색 결과 {len(review_candidates_lst)}개, 데이터 베이스 검색중...",
