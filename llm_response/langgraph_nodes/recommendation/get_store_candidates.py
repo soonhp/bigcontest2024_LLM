@@ -1,4 +1,5 @@
 from graphrag.get_embedding_model import get_embedding_model
+from graphrag.graph_search import retrieve_top_k_stores_by_review_graph_embedding, process_review_node
 from llm_response.langgraph_graph_state import GraphState
 import streamlit as st
 import re
@@ -29,7 +30,7 @@ def text_to_cypher_for_recomm(llm, state:GraphState):
     state['t2c_for_recomm'] = cypher
     return state
 
-def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:GraphState):
+def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_retriever_grp_emb, state:GraphState):
     placeholder = st.empty()
     placeholder.markdown("> 리뷰 검색중...", unsafe_allow_html=True)
     # Review similarity
@@ -62,7 +63,19 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state:Gra
     state['candidate_str'] = get_candidate_str(review_candidates_lst)
 
     # GraphEmbedding similarity
-
+    graph_candidates_lst = []
+    grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
+    with ThreadPoolExecutor() as executor:
+    futures = [
+        executor.submit(process_review_node, review, top_k_reviews)
+        for review in grp_sim_result
+    ]
+    for future in as_completed(futures):
+        result = future.result()
+        if result:
+            graph_candidates_lst.append(result)
+    
+     
     # Text2Cypher
     placeholder.markdown(
         f"> 리뷰 검색 결과 {len(review_candidates_lst)}개, 데이터 베이스 검색중...",

@@ -53,3 +53,26 @@ RETURN node.text AS text,
          menu : store.menu
        } AS metadata
 """
+
+
+retrievalQuery_grpEmb = """
+MATCH (node)<-[:HAS_REVIEW]-(store)
+RETURN node.text AS text,
+       store AS store,
+       score,
+       {
+         pk: store.pk,
+         reviewText: node.text,
+         storeName: store.MCT_NM,
+         store_Type: store.MCT_TYPE,
+         store_Image: {kakao: store.image_url_kakao, google: store.image_url_google, naver: store.image_url_naver},
+         store_Rating: {kakao: store.rating_kakao, google: store.rating_google, naver: store.rating_naver},
+         reviewCount: {kakao: store.rating_count_kakao, google: store.rating_count_google, naver: store.rating_count_naver},
+         purpose: store.purpose,
+         use_how: store.use_how,
+         visit_with: store.visit_with,
+         wait_time: store.wait_time,
+         menu: store.menu,
+         graphEmbedding: node.GraphEmbedding
+       } AS metadata
+"""

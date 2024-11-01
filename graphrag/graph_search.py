@@ -7,13 +7,16 @@ from langchain_huggingface import HuggingFaceEmbeddings
 import torch
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from get_embedding_model import get_embedding_model
+from cypher_query.retrieval_query import retrievalQuery_grpEmb
+
 # 환경 변수 로드
 load_dotenv()
 first_start_time = time.time()
 # Neo4j 설정
-neo4j_url ="bolt://43.201.102.234/:7687"
-neo4j_user = "neo4j"
-neo4j_password = "pseudorec_neo4j"
+neo4j_url = os.environ["NEO4J_URI"]
+neo4j_user = os.environ["NEO4J_USERNAME"]
+neo4j_password = os.environ["NEO4J_PASSWORD"] 
 
 # Neo4j 드라이버 설정
 driver = GraphDatabase.driver(neo4j_url, auth=(neo4j_user, neo4j_password))
@@ -21,46 +24,7 @@ driver = GraphDatabase.driver(neo4j_url, auth=(neo4j_user, neo4j_password))
 
 first_start_time = time.time()
 
-# # Neo4j 설정
-# neo4j_url = os.getenv("NEO4J_URI")
-# neo4j_user = os.getenv("NEO4J_USERNAME")
-# neo4j_password = os.getenv("NEO4J_PASSWORD")
 
-# # Neo4j 드라이버 설정
-# driver = GraphDatabase.driver(neo4j_url, auth=(neo4j_user, neo4j_password))
-
-def get_embedding_model():
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-    embeddings_model = HuggingFaceEmbeddings(
-        model_name='upskyy/bge-m3-korean',
-        model_kwargs={'device':device},
-        encode_kwargs={'normalize_embeddings':False},
-    )
-
-    return embeddings_model
-
-retrievalQuery_v3 = """
-MATCH (node)<-[:HAS_REVIEW]-(store)
-RETURN node.text AS text,
-       store AS store,
-       score,
-       {
-         pk: store.pk,
-         reviewText: node.text,
-         storeName: store.MCT_NM,
-         store_Type: store.MCT_TYPE,
-         store_Image: {kakao: store.image_url_kakao, google: store.image_url_google, naver: store.image_url_naver},
-         store_Rating: {kakao: store.rating_kakao, google: store.rating_google, naver: store.rating_naver},
-         reviewCount: {kakao: store.rating_count_kakao, google: store.rating_count_google, naver: store.rating_count_naver},
-         purpose: store.purpose,
-         use_how: store.use_how,
-         visit_with: store.visit_with,
-         wait_time: store.wait_time,
-         menu: store.menu,
-         graphEmbedding: node.GraphEmbedding
-       } AS metadata
-"""
 embedding_model = get_embedding_model()  # 초기화된 모델을 재사용
 
 def get_neo4j_vector_graph(index_name='querygraphVector'):
@@ -72,11 +36,11 @@ def get_neo4j_vector_graph(index_name='querygraphVector'):
         password=neo4j_password,
         index_name=index_name,
         text_node_property="textEmbedding",
-        retrieval_query=retrievalQuery_v3
+        retrieval_query=retrievalQuery_grpEmb
     )
 
 
-def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=50):
+def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
     """
     리뷰의 그래프 임베딩과 유사한 top-K STORE 노드를 반환합니다.
     """

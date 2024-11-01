@@ -32,7 +32,7 @@ workflow.add_node("retrieve_for_search_cypher", lambda state: retrieve_for_searc
 workflow.add_node("final_formatting_for_search", lambda state: final_formatting_for_search(llm, graphdb_driver, state))
 
 ## Recomm query nodes
-workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, state))
+workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_retriever_grp_emb, state))
 workflow.add_node("final_selecting_for_recomm", lambda state: final_selecting_for_recomm(llm, state))
 workflow.add_node("final_formatting_for_recomm", lambda state: final_formatting_for_recomm(graphdb_driver, state))
 
