@@ -7,7 +7,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 import torch
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from get_embedding_model import get_embedding_model
+from graphrag.get_embedding_model import get_embedding_model
 from cypher_query.retrieval_query import retrievalQuery_grpEmb
 
 # 환경 변수 로드
@@ -22,7 +22,7 @@ neo4j_password = os.environ["NEO4J_PASSWORD"]
 driver = GraphDatabase.driver(neo4j_url, auth=(neo4j_user, neo4j_password))
 
 
-first_start_time = time.time()
+# first_start_time = time.time()
 
 
 embedding_model = get_embedding_model()  # 초기화된 모델을 재사용
@@ -77,7 +77,7 @@ def retrieve_store_and_top_reviews(user_query, top_k_reviews=3):
     유저 쿼리와 유사한 리뷰를 가져오고, 각 리뷰의 그래프 임베딩과 유사한
     STORE 노드를 병렬로 가져옵니다.
     """
-    store_retriever = get_neo4j_vector().as_retriever(search_kwargs={"k": 3})
+    store_retriever = get_neo4j_vector_graph().as_retriever(search_kwargs={"k": 3})
     similar_reviews = store_retriever.invoke(user_query)
 
     if not similar_reviews:
@@ -98,11 +98,11 @@ def retrieve_store_and_top_reviews(user_query, top_k_reviews=3):
 
     return results
 
-# 실행 예제
+#%% 실행 예제
 
-result = retrieve_store_and_top_reviews("70대 부모님과 함께 갈 수 있는 제주 동부 지역에서 4만원 이하의 한정식을 제공하는 레스토랑을 추천해 주세요. 부모님과 함께하기 편리한 곳이었으면 좋겠습니다", top_k_reviews=50)
-real_end_time = time.time()
+# result = retrieve_store_and_top_reviews("70대 부모님과 함께 갈 수 있는 제주 동부 지역에서 4만원 이하의 한정식을 제공하는 레스토랑을 추천해 주세요. 부모님과 함께하기 편리한 곳이었으면 좋겠습니다", top_k_reviews=50)
+# real_end_time = time.time()
 
-print(f"Total Execution Time: {real_end_time - first_start_time:.4f} seconds")
-print("review_metadata :", result[0]['review_metadata'])
-print("top_stores :", result[0]['top_stores'])
+# print(f"Total Execution Time: {real_end_time - first_start_time:.4f} seconds")
+# print("review_metadata :", result[0]['review_metadata'])
+# print("top_stores :", result[0]['top_stores'])

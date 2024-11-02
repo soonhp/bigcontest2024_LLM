@@ -67,15 +67,15 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_ret
     graph_candidates_lst = []
     grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
     with ThreadPoolExecutor() as executor:
-    futures = [
-        executor.submit(process_review_node, review, top_k_reviews)
-        for review in grp_sim_result
-    ]
-    for future in as_completed(futures):
-        result = future.result()
-        if result:
-            graph_candidates_lst.append(result)
-    
+        futures = [
+            executor.submit(process_review_node, review, top_k_reviews)
+            for review in grp_sim_result
+        ]
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                graph_candidates_lst.append(result)
+        
      
     # Text2Cypher
     placeholder.markdown(
