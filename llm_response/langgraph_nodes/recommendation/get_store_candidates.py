@@ -68,7 +68,7 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_ret
     grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
     with ThreadPoolExecutor() as executor:
         futures = [
-            executor.submit(process_review_node, review, top_k_reviews)
+            executor.submit(process_review_node, review, top_k_reviews=1)
             for review in grp_sim_result
         ]
         for future in as_completed(futures):
