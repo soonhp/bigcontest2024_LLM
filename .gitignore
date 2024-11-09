@@ -15,3 +15,10 @@ temp_*
 /.vscode/*
 *.pyc
 *.pkl
+
+# 가상환경 폴더 제외
+bigcontest2024/bin/
+bigcontest2024/lib/
+bigcontest2024/include/
+bigcontest2024/share/
+bigcontest2024/pyvenv.cfg

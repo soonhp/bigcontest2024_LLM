@@ -1,5 +1,7 @@
 # bigcontest2024
 
+> python 3.10 이상
+
 ## DB SCHEMA
 
 <p align="center">
