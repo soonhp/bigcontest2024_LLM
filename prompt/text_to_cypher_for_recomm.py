@@ -111,7 +111,7 @@ WITH c, swLat, swLon, c.latitude AS storeLat, c.longitude AS storeLon
 RETURN c.pk AS pk, c.MCT_NM AS RestaurantName, c.ADDR AS Address, c.menu AS Menu, 
        point.distance(point({latitude: swLat, longitude: swLon}), point({latitude: storeLat, longitude: storeLon})) AS Distance_in_meters_from_Jeju_Shinhwa_World
 ORDER BY Distance_in_meters_from_Jeju_Shinhwa_World ASC
-LIMIT 50
+LIMIT 500
 """,
     """USER INPUT: 8살 아이 포함 3인 가족 가기 좋은 평균가격 3만원대 패밀리 레스토랑 추천해줘 QUERY: // 1. 패밀리 레스토랑 중에서 가격 정보를 필터링
 MATCH (s:STORE)
@@ -127,7 +127,7 @@ MATCH (s)-[:HAS_VISIT_KEYWORD]->(v:Visit_with)
 WHERE v.member CONTAINS '아이'
 RETURN s.pk AS pk, s.MCT_NM AS RestaurantName, s.ADDR AS Address, s.menu AS Menu, 
        s.MCT_TYPE AS RestaurantType, v.member AS VisitWith
-LIMIT 50
+LIMIT 500
 """,
     """USER INPUT: 제주 중문 근처에서 30대 혼자 여행객에게 적합한 1~2만원대 한식 메뉴를 제공하는 조용한 맛집을 추천해 주세요. 혼자 방문하기 편안한 곳이면 좋겠습니다 QUERY: // 1. '제주시' 또는 '서귀포시' 내에서 '중문'을 포함하는 지역 찾기
 MATCH (c:City)-[:HAS_REGION]->(rg:Region)
@@ -153,7 +153,7 @@ ORDER BY Age30CustomerRatio DESC  // 30대 고객 비중이 높은 순으로 정
 // 6. 결과 출력 (pk 추가)
 RETURN s.pk AS pk, s.MCT_NM AS RestaurantName, s.ADDR AS Address, s.menu AS Menu, 
        VisitWith, Age30CustomerRatio
-LIMIT 50""",
+LIMIT 500""",
 ]
 
 EXAMPLES_COMBINED = '\n'.join(EXAMPLES) if EXAMPLES else ''

@@ -1,4 +1,4 @@
-from get_embedding_model import get_embedding_model
+from graphrag.get_embedding_model import get_embedding_model
 from langchain_community.vectorstores.neo4j_vector import Neo4jVector
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
