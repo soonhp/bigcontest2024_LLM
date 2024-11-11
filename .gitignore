@@ -10,6 +10,7 @@ crawling/naver-map-results-preprocessed.json
 crawling/google_crawling.json
 desktop.ini
 /data
+/PPT
 
 temp_*
 /.vscode/*

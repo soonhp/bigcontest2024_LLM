@@ -172,7 +172,7 @@ LIMIT 2"""
 
 # (v3) 특정연월기준 vs 특정연월 기준 없음 구분 초점 
 EXAMPLES_v3 = [
-    """USER INPUT: '23년 10월 기준으로 제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은곳은 ?' 
+    """USER INPUT: '2023년 10월 기준으로 제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은곳은 ?' 
     QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
     WHERE m.YM = 202310
       AND c.name = '제주시'
@@ -236,7 +236,70 @@ EXAMPLES_v3 = [
 ]
 
 
-EXAMPLES_COMBINED = '\n'.join(EXAMPLES_v3) if EXAMPLES_v3 else ''
+EXAMPLES_v4 = [
+    """USER INPUT: '23년 10월에 제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은곳은 ?' 
+    THOUGHT : It is based on a specific month and year
+    QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+    WHERE m.YM = 202310
+      AND c.name = '제주시'
+      AND r.name = '한림읍'
+      AND s.MCT_TYPE = '커피'
+    RETURN s.MCT_NM, u.RC_M12_AGE_30_CUS_CNT_RAT AS age_30_ratio
+    ORDER BY age_30_ratio DESC
+    LIMIT 1""",    
+    
+    """USER INPUT: '서귀포시 안덕면의 중국집에서 가장 높은 화요일 이용 비중인 곳은?' 
+    THOUGHT : It is not based on a specific month and year
+    QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+    ORDER BY m.YM DESC
+    WITH c, r, s,
+         collect(u.UE_CNT_GRP)[0] AS last_UE_CNT_GRP, collect(u.UE_AMT_GRP)[0] AS last_UE_AMT_GRP, collect(u.UE_AMT_PER_TRSN_GRP)[0] AS last_UE_AMT_PER_TRSN_GRP,
+         avg(u.MON_UE_CNT_RAT) AS avg_MON_UE_CNT_RAT, avg(u.TUE_UE_CNT_RAT) AS avg_TUE_UE_CNT_RAT, avg(u.WED_UE_CNT_RAT) AS avg_WED_UE_CNT_RAT, avg(u.THU_UE_CNT_RAT) AS avg_THU_UE_CNT_RAT, avg(u.FRI_UE_CNT_RAT) AS avg_FRI_UE_CNT_RAT, avg(u.SAT_UE_CNT_RAT) AS avg_SAT_UE_CNT_RAT, avg(u.SUN_UE_CNT_RAT) AS avg_SUN_UE_CNT_RAT,
+         avg(u.HR_5_11_UE_CNT_RAT) AS avg_HR_5_11_UE_CNT_RAT, avg(u.HR_12_13_UE_CNT_RAT) AS avg_HR_12_13_UE_CNT_RAT, avg(u.HR_14_17_UE_CNT_RAT) AS avg_HR_14_17_UE_CNT_RAT, avg(u.HR_18_22_UE_CNT_RAT) AS avg_HR_18_22_UE_CNT_RAT, avg(u.HR_23_4_UE_CNT_RAT) AS avg_HR_23_4_UE_CNT_RAT,    
+         avg(u.LOCAL_UE_CNT_RAT) AS avg_LOCAL_UE_CNT_RAT, avg(u.RC_M12_MAL_CUS_CNT_RAT) AS avg_RC_M12_MAL_CUS_CNT_RAT, avg(u.RC_M12_FME_CUS_CNT_RAT) AS avg_RC_M12_FME_CUS_CNT_RAT,
+         avg(u.RC_M12_AGE_UND_20_CUS_CNT_RAT) AS avg_RC_M12_AGE_UND_20_CUS_CNT_RAT, avg(u.RC_M12_AGE_30_CUS_CNT_RAT) AS avg_RC_M12_AGE_30_CUS_CNT_RAT, avg(u.RC_M12_AGE_40_CUS_CNT_RAT) AS avg_RC_M12_AGE_40_CUS_CNT_RAT, avg(u.RC_M12_AGE_50_CUS_CNT_RAT) AS avg_RC_M12_AGE_50_CUS_CNT_RAT, avg(u.RC_M12_AGE_OVR_60_CUS_CNT_RAT) AS avg_RC_M12_AGE_OVR_60_CUS_CNT_RAT
+    WHERE c.name = '서귀포시'
+      AND r.name = '안덕면'
+      AND s.MCT_TYPE = '중식'
+    RETURN s.MCT_NM, avg_TUE_UE_CNT_RAT AS avg_tuesday_ratio    
+    ORDER BY avg_tuesday_ratio DESC
+    LIMIT 1""",
+
+    """USER INPUT: '2023년 11월 기준으로 제주시 노형동에 있는 단품요리 전문점 중 이용건수가 상위 10%에 속하고 현지인 이용 비중이 가장 높은 곳은?' 
+    THOUGHT : It is based on a specific month and year
+    QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+    WHERE m.YM = 202311
+      AND c.name = '제주시'
+      AND r.name = '노형동'
+      AND s.MCT_TYPE = '단품요리 전문'
+      AND last_UE_CNT_GRP = '상위 10% 이하'
+      RETURN s.MCT_NM, u.RC_M12_MAL_CUS_CNT_RAT AS local_ratio
+      ORDER BY local_ratio DESC
+      LIMIT 1""",
+
+    """USER INPUT: '서귀포시 빵집 중에 이용건수 구간이 10~25%, 이용금액 구간은 25~50%에 해당하고 오후 2시에서 5시 사이의 이용 비중이 30% 이상이며 여성이용 비중은 30% 이상인 곳 중에 60대 이상 이용비중이 가장 높은 두 곳은?' 
+    THOUGHT : It is not based on a specific month and year
+    QUERY: MATCH (c:City)-[:HAS_REGION]->(r:Region)-[:HAS_STORE]->(s:STORE)-[u:USE]->(m:MONTH)
+    ORDER BY m.YM DESC
+    WITH c, r, s,
+         collect(u.UE_CNT_GRP)[0] AS last_UE_CNT_GRP, collect(u.UE_AMT_GRP)[0] AS last_UE_AMT_GRP, collect(u.UE_AMT_PER_TRSN_GRP)[0] AS last_UE_AMT_PER_TRSN_GRP,
+         avg(u.MON_UE_CNT_RAT) AS avg_MON_UE_CNT_RAT, avg(u.TUE_UE_CNT_RAT) AS avg_TUE_UE_CNT_RAT, avg(u.WED_UE_CNT_RAT) AS avg_WED_UE_CNT_RAT, avg(u.THU_UE_CNT_RAT) AS avg_THU_UE_CNT_RAT, avg(u.FRI_UE_CNT_RAT) AS avg_FRI_UE_CNT_RAT, avg(u.SAT_UE_CNT_RAT) AS avg_SAT_UE_CNT_RAT, avg(u.SUN_UE_CNT_RAT) AS avg_SUN_UE_CNT_RAT,
+         avg(u.HR_5_11_UE_CNT_RAT) AS avg_HR_5_11_UE_CNT_RAT, avg(u.HR_12_13_UE_CNT_RAT) AS avg_HR_12_13_UE_CNT_RAT, avg(u.HR_14_17_UE_CNT_RAT) AS avg_HR_14_17_UE_CNT_RAT, avg(u.HR_18_22_UE_CNT_RAT) AS avg_HR_18_22_UE_CNT_RAT, avg(u.HR_23_4_UE_CNT_RAT) AS avg_HR_23_4_UE_CNT_RAT,    
+         avg(u.LOCAL_UE_CNT_RAT) AS avg_LOCAL_UE_CNT_RAT, avg(u.RC_M12_MAL_CUS_CNT_RAT) AS avg_RC_M12_MAL_CUS_CNT_RAT, avg(u.RC_M12_FME_CUS_CNT_RAT) AS avg_RC_M12_FME_CUS_CNT_RAT,
+         avg(u.RC_M12_AGE_UND_20_CUS_CNT_RAT) AS avg_RC_M12_AGE_UND_20_CUS_CNT_RAT, avg(u.RC_M12_AGE_30_CUS_CNT_RAT) AS avg_RC_M12_AGE_30_CUS_CNT_RAT, avg(u.RC_M12_AGE_40_CUS_CNT_RAT) AS avg_RC_M12_AGE_40_CUS_CNT_RAT, avg(u.RC_M12_AGE_50_CUS_CNT_RAT) AS avg_RC_M12_AGE_50_CUS_CNT_RAT, avg(u.RC_M12_AGE_OVR_60_CUS_CNT_RAT) AS avg_RC_M12_AGE_OVR_60_CUS_CNT_RAT
+    WHERE c.name = '서귀포시'
+      AND s.MCT_TYPE = '베이커리'
+      AND last_UE_CNT_GRP = '10~25%' 
+      AND last_UE_AMT_GRP = '25~50%'
+      AND avg_HR_14_17_UE_CNT_RAT >= 0.3 
+      AND avg_RC_M12_FME_CUS_CNT_RAT >= 0.3
+    RETURN s.MCT_NM, avg_RC_M12_AGE_OVR_60_CUS_CNT_RAT AS avg_age_60_ratio
+    ORDER BY avg_age_60_ratio DESC
+    LIMIT 2"""
+]
+
+
+EXAMPLES_COMBINED = '\n'.join(EXAMPLES_v4) if EXAMPLES_v4 else ''
 
 TEXT_TO_CYPHER_FOR_SEARCH_TEMPLATE = """
 Task: Generate a Cypher statement for querying a Neo4j graph database from a user input.
@@ -253,6 +316,7 @@ Input:
 {query}
 
 Determine whether this question is based on a specific month and year (m.YM) or not, and generate a query according to that criterion.
+If it is based on a specific month and year, please use WHERE m.YM = specific month and year.
 If it is not based on a specific month and year, use the WITH clause to apply last to categorical columns and avg to numerical columns before generating conditions.
 Never use any properties or relationships not included in the schema.
 Never include triple backticks ```.
