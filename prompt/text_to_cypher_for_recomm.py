@@ -92,7 +92,7 @@ WITH c, uzLat, uzLon, c.latitude AS cafeLat, c.longitude AS cafeLon
 RETURN c.pk AS pk, c.MCT_NM AS CafeName, c.ADDR AS Address, c.menu AS Menu, 
        point.distance(point({latitude: uzLat, longitude: uzLon}), point({latitude: cafeLat, longitude: cafeLon})) AS dist
 ORDER BY dist ASC
-LIMIT 50
+LIMIT 500
 """,
     """USER INPUT: 바다 보이는 횟집 추천해줘. 제주 신화월드 근처에 부모님 모시고 가기 좋은 집 추천해줘 QUERY: // 1. '신화'와 '월드' 두 단어를 모두 포함하는 관광지(ATTR) 찾기
 MATCH (a:ATTR)

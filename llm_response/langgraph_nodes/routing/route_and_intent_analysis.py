@@ -3,7 +3,7 @@ from prompt.routing_and_intent_analysis import ROUTE_INTT_PROMPT_TEMPLATE
 import streamlit as st
 
 def route_and_intent_analysis(llm, state: GraphState):
-    print(f"Routing and intent analysis".ljust(100, '-'))
+    print(f"Routing and intent analysis".ljust(100, '='))
     print(f"query : {state['query']}")
 
     placeholder = st.empty()

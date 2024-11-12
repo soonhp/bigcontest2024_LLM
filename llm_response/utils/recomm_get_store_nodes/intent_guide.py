@@ -9,7 +9,11 @@ class IntentGuide:
     def add(self, string):
         self.guide += string
 
-    def close(self, num_canidates):
+    def close(self):
+        self.guide += f"""</ul>
+        </div>"""
+
+    def close_with_num_candidates(self, num_canidates):
         self.guide += f"""</ul>
         <h5 style="font-size: 16px;">⏳ 질문 조건을 만족하는 {num_canidates}개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
         </div>"""

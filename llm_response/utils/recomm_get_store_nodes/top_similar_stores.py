@@ -16,6 +16,7 @@ def retrieve_top_similar_stores_pk(store_pk, query_embedding):
     """
     특정 STORE 노드에 연결된 리뷰 중 각 STORE별 유사도가 가장 높은 리뷰를 반환합니다.
     """
+    print(f"Retrieve top review similar stores".ljust(100, '-'))
 
     query = """
     MATCH (s:STORE)-[:HAS_REVIEW]->(r:Review)
@@ -35,9 +36,15 @@ def retrieve_top_similar_stores_pk(store_pk, query_embedding):
         result = session.run(query, store_pk=store_pk, query_embedding=query_embedding)
         end_time = time.time()
         print(f"Query Execution Time for stores {len(store_pk)}: {end_time - start_time:.4f} seconds")
-        return [
+        answer = [
             {
                 "pk": record["pk"],
                 "similarity": record["similarity"]
             } for record in result
         ]
+        print(f"results : ")
+        for top_store in answer:
+            print(f"{top_store['pk']:10} : {top_store['similarity']:5.3f}")
+        print(f"".ljust(100, '-'))
+
+        return answer

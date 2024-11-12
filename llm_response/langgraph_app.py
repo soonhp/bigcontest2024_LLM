@@ -36,8 +36,6 @@ workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm
 workflow.add_node("final_selecting_for_recomm", lambda state: final_selecting_for_recomm(llm, state))
 workflow.add_node("final_formatting_for_recomm", lambda state: final_formatting_for_recomm(graphdb_driver, state))
 
-
-
 # Edges
 ## Conditional edges
 workflow.add_conditional_edges(

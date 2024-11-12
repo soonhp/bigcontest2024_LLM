@@ -2,7 +2,7 @@ from llm_response.langgraph_graph_state import GraphState
 from neo4j.exceptions import ServiceUnavailable, CypherSyntaxError
 
 def retrieve_for_search_cypher(graphdb_driver, state:GraphState):
-    print(f"[Search] Cypher result : neo4j 추출 결과".ljust(100, '-'))
+    print(f"[Search] Cypher result : neo4j 추출 결과".ljust(100, '='))
     try:
         records, summary, keys = graphdb_driver.execute_query(state['t2c_for_search'])
         print(f"records : \n")

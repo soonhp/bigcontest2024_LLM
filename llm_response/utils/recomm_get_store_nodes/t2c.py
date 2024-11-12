@@ -15,4 +15,5 @@ def text_to_cypher_for_recomm(llm, state:GraphState):
     print(f"# cypher : \n{cypher}\n")
     state['t2c_for_recomm'] = cypher
     print(f"# input_tokens count : {response.usage_metadata['input_tokens']}")
+    print(f"".ljust(100, '-'))
     return state
