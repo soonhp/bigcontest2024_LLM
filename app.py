@@ -43,22 +43,9 @@ if st.session_state.messages[-1]["role"] != "assistant":
         with st.spinner("Thinking..."):
             # LangGraph
             gs = GraphState(query=query, messages=st.session_state.messages)
-            print(f"gs.keys() : {gs.keys()}")
             result_gs = app.invoke(gs, config=config)
-
-            # response = retrieve_store_nodes(query)
-            # print(f"response : \n{response}")
-
             placeholder = st.empty()
 
-            # 임의로 response 추가 : 나중에 데이터 적재되면 활용할 예정
-            # for r in response :
-            #     r.metadata['menu'] = {"메뉴1":"20000", "메뉴2":"25000"}
-            #     r.metadata['Nearby tourist attractions'] = {"성산일출봉":"10분이내 거리", "섭지코지":"20분이내 거리"}
-
-            # ai_msg = get_llm_response(query, response)
-            # if result_gs['final_answer']:
-                # placeholder.markdown(result_gs['final_answer'], unsafe_allow_html=True)
     if result_gs['final_answer']:
         message = {"role": "assistant", "content": result_gs['final_answer']}
         st.session_state.messages.append(message)

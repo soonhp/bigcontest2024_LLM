@@ -18,7 +18,7 @@ from llm_response.langgraph_nodes.search.text_to_cypher_for_search import text_t
 
 llm = get_llm_model()
 store_retriever_rev_emb = get_neo4j_vector().as_retriever(search_kwargs={"k": CONFIG.store_retriever_rev_emb_k})
-store_retriever_grp_emb = get_neo4j_vector_graph().as_retriever(search_kwargs={"k": CONFIG.store_retriever_rev_emb_k})
+store_retriever_grp_emb = get_neo4j_vector_graph().as_retriever(search_kwargs={"k": CONFIG.store_retriever_rev_emb_k_grp})
 
 workflow = StateGraph(GraphState)
 
@@ -35,8 +35,6 @@ workflow.add_node("final_formatting_for_search", lambda state: final_formatting_
 workflow.add_node("get_store_candidates", lambda state: get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_retriever_grp_emb, state))
 workflow.add_node("final_selecting_for_recomm", lambda state: final_selecting_for_recomm(llm, state))
 workflow.add_node("final_formatting_for_recomm", lambda state: final_formatting_for_recomm(graphdb_driver, state))
-
-
 
 # Edges
 ## Conditional edges

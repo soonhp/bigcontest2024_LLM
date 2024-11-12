@@ -23,7 +23,7 @@ def final_formatting_for_search(llm, graphdb_driver, state: GraphState):
     #       """
     #       enum += 1
 
-    print(f"Final formatting for search".ljust(100, '-'))
+    print(f"Final formatting for search".ljust(100, '='))
     response = llm.invoke(
       FINAL_FORMATTING_FOR_SEARCH.format(
          query=state['query'], 

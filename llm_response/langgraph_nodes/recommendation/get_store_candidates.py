@@ -1,148 +1,96 @@
+
+from config import CONFIG
 from graphrag.get_embedding_model import get_embedding_model
-from graphrag.graph_search import retrieve_top_k_stores_by_review_graph_embedding, process_review_node
 from llm_response.langgraph_graph_state import GraphState
+from llm_response.utils.recomm_get_store_nodes.intent_guide import IntentGuide
+from llm_response.utils.recomm_get_store_nodes.t2c import text_to_cypher_for_recomm
+from llm_response.utils.recomm_get_store_nodes.token_check import token_check
+from llm_response.utils.recomm_get_store_nodes.top_similar_stores import retrieve_top_similar_stores_pk
+from llm_response.utils.recomm_get_store_nodes.utils import convert_markdown_to_html
+from llm_response.utils.recomm_get_store_nodes.cypher_result_to_str import get_candidate_str, get_cypher_result_to_str
+
 import streamlit as st
 import re
 
 from prompt.text_to_cypher_for_recomm import EXAMPLES_COMBINED, NEO4J_SCHEMA_RECOMM, TEXT_TO_CYPHER_FOR_RECOMM_TEMPLATE
-from utils import get_candidate_str
+from prompt.final_selecting_for_recomm import FINAL_SELECTING_FOR_RECOMM_v2
+
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import time
 
+embedding_model = get_embedding_model()  # 초기화된 모델을 재사용
 
-# 마크다운에서 HTML로 변환하는 함수
-def convert_markdown_to_html(text):
-    # **bold** -> <b>bold</b>
-    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
-    return text
-
-def text_to_cypher_for_recomm(llm, state:GraphState):
-    print(f"Text2Cypher for SEARCH".ljust(100, '-'))
-    response = llm.invoke(
-        TEXT_TO_CYPHER_FOR_RECOMM_TEMPLATE.format(
-            NEO4J_SCHEMA_RECOMM=NEO4J_SCHEMA_RECOMM,
-            EXAMPLES_COMBINED=EXAMPLES_COMBINED, 
-            query=state['query']
-            )
-    )
-    print(f"# input_tokens count : {response.usage_metadata['input_tokens']}")
-    cypher = response.content.replace('```', '').replace('cypher', '').strip()
-    print(f"cypher : {cypher}")
-    state['t2c_for_recomm'] = cypher
-    return state
 
 def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_retriever_grp_emb, state:GraphState):
+    print(f"Get Store Candidates".ljust(100, '='))
+    candidate_str = ''
+    intent = state['intent']
+    ig = IntentGuide()
+    ig.add(f"<li style='margin-bottom: 8px;'>{convert_markdown_to_html(intent)}</li>")
+
     placeholder = st.empty()
-    placeholder.markdown("> 리뷰 검색중...", unsafe_allow_html=True)
-    # Review similarity
-    intent_guide = """
-    <div style="background-color: #f9f9f9; padding: 20px; border-radius: 10px; box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);">
-        <h5 style="font-size: 16px; margin-bottom: 10px;">🔍 질문 의도를 다음과 같이 파악했어요 🤖</h5>
-        <ul style="list-style-type: none; padding-left: 0;">
-    """
-    review_candidates_lst = []
-    # query에 대한 리뷰 CONFIG.store_retriever_rev_emb_k개 후보에 추가
-    rev_sim_result = store_retriever_rev_emb.invoke(state['query'])
-    for document in rev_sim_result:
-        if document.metadata['pk'] not in [d.metadata['pk'] for d in review_candidates_lst]:  # 중복방지
-            review_candidates_lst.append(document)
+    placeholder.markdown("> 조건을 만족하는 맛집 찾는 중...", unsafe_allow_html=True)
+    
+    # Text to Cypher
+    state = text_to_cypher_for_recomm(llm, state)
+    
+    # Retrieve store nodes filtered by DB schema
+    candidates_1st, summary, keys = graphdb_driver.execute_query(state['t2c_for_recomm'])
+    query_embedding = embedding_model.embed_query(intent)
+    if candidates_1st:
+        placeholder.markdown(
+            f"> {len(candidates_1st)}개의 후보 탐색 중...",
+            unsafe_allow_html=True,
+        )
 
-    # intent별 CONFIG.store_retriever_rev_emb_k개씩 후보에 추가
-    for intent in state['intent']:
-        converted_intent = convert_markdown_to_html(intent)  # 마크다운을 HTML로 변환
-        intent_guide += f"<li style='margin-bottom: 8px;'>{converted_intent}</li>"
-        rev_sim_result = store_retriever_rev_emb.invoke(intent)  # invoke는 동기적으로 실행되는 메서드
-        for document in rev_sim_result:
-            store_name = document.metadata['storeName']
-            review_text = document.page_content  # 페이지 내용에 접근할 때는 page_content
-            print(f"Store Name: {store_name}")
-            print(f"Review Text: {review_text}")
-            print()
-            if document.metadata['pk'] not in [d.metadata['pk'] for d in review_candidates_lst]:  # 중복방지
-                review_candidates_lst.append(document)
+        # Retrieve store nodes by review embedding search
+        top_sim_stores = retrieve_top_similar_stores_pk(
+            store_pk=[r['pk'] for r in candidates_1st], 
+            query_embedding=query_embedding
+            )
 
-    state['candidate_str'] = get_candidate_str(review_candidates_lst)
+        # 정리
+        top_sim_pks = [ts['pk'] for ts in top_sim_stores]
+        candidates_2nd = [r for r in candidates_1st if r['pk'] in top_sim_pks]
+        placeholder.markdown(
+            f"> {len(candidates_2nd)}개의 후보 탐색 중...",
+            unsafe_allow_html=True,
+        )
+        cypher_result_str = get_cypher_result_to_str(candidates_2nd, query_embedding, graphdb_driver, k=2)
+        candidate_str += cypher_result_str
+
+    lack_num = CONFIG.recomm_candidates_num - len(candidates_1st)
+    if lack_num:
+        review_retrieval = store_retriever_rev_emb.invoke(state['intent'])
+        candidate_str += get_candidate_str(review_retrieval[:lack_num], query_embedding, graphdb_driver, use_unique_k=lack_num, review_k=2)
+        placeholder.markdown(
+            f"> {len(candidates_1st) + len(review_retrieval)}개의 후보 탐색 중...",
+            unsafe_allow_html=True,
+        )
+    
+
 
     # GraphEmbedding similarity
-    graph_candidates_lst = []
-    grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
-    with ThreadPoolExecutor() as executor:
-        futures = [
-            executor.submit(process_review_node, review, top_k_reviews=1)
-            for review in grp_sim_result
-        ]
-        for future in as_completed(futures):
-            result = future.result()
-            if result:
-                graph_candidates_lst.append(result)
-        
-     
-    # Text2Cypher
-    placeholder.markdown(
-        f"> 리뷰 검색 결과 {len(review_candidates_lst)}개, 데이터 베이스 검색중...",
-        unsafe_allow_html=True,
-    )
-    state = text_to_cypher_for_recomm(llm, state)
-    records, summary, keys = graphdb_driver.execute_query(state['t2c_for_recomm'])
-    # pk 기준 중복 제거
-    records_drop_dup = []
-    for r in records:
-        if r['pk'] not in [d['pk'] for d in records_drop_dup]:
-            records_drop_dup.append(r)
-    embedding_model = get_embedding_model()
-    query_embedding = embedding_model.embed_query(state['query'])
-    state['candidate_str'] += '\n'
-    t2c_candidates_cnt = 0
-    for r in records_drop_dup:
-        if t2c_candidates_cnt == 3:
-            break
-        r_keys = r.keys()
-        one_record_str = ''
-        for key in r_keys:
-            one_record_str += f"{key} : {str(r[key])[:100]}\n"
-            if key == 'pk':
-                reviews = retrieve_top_k_reviews(r[key], query_embedding, graphdb_driver, k=2)
-                if reviews:
-                    reviews_lst = [f"{ri}. {review['text'][:100]}" for ri, review in enumerate(reviews, start=1)]
-                    one_record_str += f"리뷰 : {', '.join(reviews_lst)}\n"
-        if '리뷰' in one_record_str:
-            t2c_candidates_cnt += 1
-            state["candidate_str"] += one_record_str + '\n'
+    # graph_candidates_lst = []
+    # grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
+    # with ThreadPoolExecutor() as executor:
+    #     futures = [
+    #         executor.submit(process_review_node, review, top_k_reviews=1)
+    #         for review in grp_sim_result
+    #     ]
+    #     for future in as_completed(futures):
+    #         result = future.result()
+    #         if result:
+    #             graph_candidates_lst.append(result)
 
+    # Token check
+    state["candidate_str"] = token_check(candidate_str, state, llm, placeholder)
     place_holder_str = ''
-    if len(review_candidates_lst):
-        place_holder_str += f"> 리뷰 검색 결과 후보 : {len(review_candidates_lst)}개"
-    if t2c_candidates_cnt:
-        place_holder_str += f", 데이터 베이스 검색 결과 후보 : {t2c_candidates_cnt}개"
     placeholder.markdown(place_holder_str, unsafe_allow_html=True)
 
-    intent_guide += f"""  	</ul>
-<h5 style="font-size: 16px;">⏳ 질문 조건을 만족하는 {len(review_candidates_lst) + t2c_candidates_cnt}개의 후보 중에서 최적의 추천 결과 선별 중...</h5>
-
-</div>"""
-    st.markdown(intent_guide, unsafe_allow_html=True)
-    print(f"{state.keys()}")
-    state["final_answer"] = intent_guide + '\n'
+    # Guide
+    ig.close()
+    st.markdown(ig.guide, unsafe_allow_html=True)
+    state["final_answer"] = ig.guide + '\n'
 
     return state
-
-
-def retrieve_top_k_reviews(store_pk, query_embedding, driver, k=3):
-    """
-    특정 STORE 노드에 연결된 리뷰 중 유사한 TOP-K 리뷰를 반환합니다.
-    """
-    query = """
-    MATCH (s:STORE {pk: $store_pk})-[:HAS_REVIEW]->(r:Review)
-    WHERE r.textEmbedding IS NOT NULL
-    RETURN r.text AS text, gds.similarity.cosine(r.textEmbedding, $query_embedding) AS similarity
-    ORDER BY similarity DESC
-    LIMIT $k
-    """
-    with driver.session() as session:
-        result = session.run(
-            query, store_pk=store_pk, query_embedding=query_embedding, k=k
-        )
-        return [
-            {"text": record["text"], "similarity": record["similarity"]}
-            for record in result
-        ]

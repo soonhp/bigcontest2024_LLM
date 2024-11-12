@@ -3,7 +3,7 @@ from prompt.routing_and_intent_analysis import ROUTE_INTT_PROMPT_TEMPLATE
 import streamlit as st
 
 def route_and_intent_analysis(llm, state: GraphState):
-    print(f"Routing and intent analysis".ljust(100, '-'))
+    print(f"Routing and intent analysis".ljust(100, '='))
     print(f"query : {state['query']}")
 
     placeholder = st.empty()
@@ -11,6 +11,7 @@ def route_and_intent_analysis(llm, state: GraphState):
 
     route_response = llm.invoke(ROUTE_INTT_PROMPT_TEMPLATE.format(query=state["query"]))
     print(f"\n{route_response.content}")
+    print(f"# input_tokens count : {route_response.usage_metadata['input_tokens']}")
 
     route_response_json = eval(
         route_response.content.replace("```", "").replace("json", "")

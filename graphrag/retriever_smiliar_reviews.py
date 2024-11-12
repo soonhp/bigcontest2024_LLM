@@ -1,4 +1,4 @@
-from get_embedding_model import get_embedding_model
+from graphrag.get_embedding_model import get_embedding_model
 from langchain_community.vectorstores.neo4j_vector import Neo4jVector
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
@@ -65,8 +65,8 @@ def retrieve_top_k_reviews(store_pk, query_embedding, k=3):
         start_time = time.time()
         result = session.run(query, store_pk=store_pk, query_embedding=query_embedding, k=k)
         end_time = time.time()
-        print(f"Query Execution Time for store {store_pk}: {end_time - start_time:.4f} seconds")
         return [{"text": record["text"], "similarity": record["similarity"]} for record in result]
+    
 
 def process_review_node(review_node, query_embedding, top_k_reviews):
     """

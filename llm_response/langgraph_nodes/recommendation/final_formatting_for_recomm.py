@@ -1,5 +1,5 @@
 from llm_response.langgraph_graph_state import GraphState
-from utils import get_ratings_str_for_node
+from llm_response.utils.recomm_final_formatting.star_formatting import get_ratings_str_for_node
 import streamlit as st
 
 REVIEW_HTML = """<div style="background-color: #f9f9f9; padding: 10px 15px; border-left: 4px solid #FFA500; margin-bottom: 20px;">
@@ -22,7 +22,7 @@ def get_image_html_str(node):
 
 
 def final_formatting_for_recomm(graphdb_driver, state:GraphState):
-    print(f"Final formatting for recomm".ljust(100, '-'))
+    print(f"Final formatting for recomm".ljust(100, '='))
     pk_store_cypher = """MATCH (s:STORE) WHERE s.pk = {pk} RETURN s"""
     pk_lst = [str(r['pk']) for r in state['selected_recommendations']['recommendations']]
     retrieved_stores_nodes = []
@@ -54,6 +54,4 @@ def final_formatting_for_recomm(graphdb_driver, state:GraphState):
     state["final_answer"] += (
         state["selected_recommendations"]["decorational_mention_end"] + "\n"
     )
-
-    print(f"state['final_answer'] : {state['final_answer']}")
     return state
