@@ -54,7 +54,6 @@ def retrieve_top_k_reviews(store_pk, query_embedding, k=3):
     """
     특정 STORE 노드에 연결된 리뷰 중 유사한 TOP-K 리뷰를 반환합니다.
     """
-    print(f"Retrieve reviews of stores".ljust(100, '-'))
     query = """
     MATCH (s:STORE {pk: $store_pk})-[:HAS_REVIEW]->(r:Review)
     WHERE r.textEmbedding IS NOT NULL
@@ -66,8 +65,6 @@ def retrieve_top_k_reviews(store_pk, query_embedding, k=3):
         start_time = time.time()
         result = session.run(query, store_pk=store_pk, query_embedding=query_embedding, k=k)
         end_time = time.time()
-        print(f"Query Execution Time for store {store_pk}: {end_time - start_time:.4f} seconds")
-        print(f"".ljust(100, '-'))
         return [{"text": record["text"], "similarity": record["similarity"]} for record in result]
     
 

@@ -4,7 +4,6 @@ from pprint import pprint
 
 
 def final_selecting_for_recomm(llm, state: GraphState):
-
    print("Selecting for recomm".ljust(100, '='))
 
    prompt = FINAL_SELECTING_FOR_RECOMM_v2.format(
@@ -12,6 +11,7 @@ def final_selecting_for_recomm(llm, state: GraphState):
    intent=state['intent'],
    candidates=state['candidate_str']
    )
+
    response = llm.invoke(prompt)
    print(f"Candidates str : \n{state['candidate_str']}\n")
    print(f"input tokens : {response.usage_metadata['input_tokens']:,}")

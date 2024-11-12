@@ -35,9 +35,11 @@ def get_cypher_result_to_str(candidates_2nd, query_embedding, graphdb_driver, k=
     return cypher_result_str
 
 
-def get_candidate_str(candidates, query_embedding, graphdb_driver, review_k):
+def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k, review_k):
     drop_dup = []
     for r in candidates:
+        if len(drop_dup) == use_unique_k:
+            break
         if r.metadata['pk'] not in [d.metadata['pk'] for d in drop_dup]:
             drop_dup.append(r)
 
