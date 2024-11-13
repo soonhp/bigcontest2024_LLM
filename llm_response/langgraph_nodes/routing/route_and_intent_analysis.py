@@ -23,7 +23,9 @@ def route_and_intent_analysis(llm, state: GraphState):
     if state["query_type"] == "search":
         placeholder.markdown(f"> {route_response_json['comment']}", unsafe_allow_html=True)
     if state["query_type"] == "recomm":
+        state['subtype'] = route_response_json['subtype']
         placeholder.markdown(
             f"> {route_response_json['comment']}", unsafe_allow_html=True
         )
+        
     return state

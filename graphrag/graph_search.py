@@ -46,7 +46,7 @@ def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
     """
     query = """
     MATCH (s:STORE:GraphEmb)
-    RETURN s.MCT_NM AS simstore, gds.similarity.cosine(s.GraphEmbedding, $review_GraphEmbedding) AS similarity
+    RETURN s.MCT_NM AS simstore, s.pk AS store_pk, gds.similarity.cosine(s.GraphEmbedding, $review_GraphEmbedding) AS similarity
     ORDER BY similarity DESC
     LIMIT $k
     """
@@ -55,7 +55,7 @@ def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
         result = session.run(query, review_GraphEmbedding=review_GraphEmbedding, k=k)
         end_time = time.time()
         print(f"Query Execution Time: {end_time - start_time:.4f} seconds")
-        return [{"store": record["simstore"], "similarity": record["similarity"]} for record in result]
+        return [{"storeName": record["simstore"], "pk": record['store_pk'], "similarity": record["similarity"]} for record in result]
 
 def process_review_node(review_node, top_k_reviews):
     """
@@ -69,8 +69,9 @@ def process_review_node(review_node, top_k_reviews):
 
     review_GraphEmbedding = review_metadata["graphEmbedding"]
     top_stores = retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, top_k_reviews)
-
-    return {"review_metadata": review_metadata, "top_stores": top_stores}
+    
+    # return {"review_metadata": review_metadata, "top_stores": top_stores}
+    return {"metadata": top_stores}
 
 def retrieve_store_and_top_reviews(user_query, top_k_reviews=3):
     """

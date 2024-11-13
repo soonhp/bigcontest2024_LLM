@@ -1,3 +1,6 @@
+from graphrag.graph_search import retrieve_top_k_stores_by_review_graph_embedding, process_review_node
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
 def retrieve_top_k_reviews(store_pk, query_embedding, driver, k=2):
     """
     특정 STORE 노드에 연결된 리뷰 중 유사한 TOP-K 리뷰를 반환합니다.
@@ -35,14 +38,27 @@ def get_cypher_result_to_str(candidates_2nd, query_embedding, graphdb_driver, k=
     return cypher_result_str
 
 
-def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k, review_k):
+def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k, state, review_k):          
     drop_dup = []
     for r in candidates:
         if len(drop_dup) == use_unique_k:
             break
         if r.metadata['pk'] not in [d.metadata['pk'] for d in drop_dup]:
             drop_dup.append(r)
-
+    if state == 'purpose_and_visit_with' :
+        results = []
+        with ThreadPoolExecutor() as executor:
+            futures = [
+                executor.submit(process_review_node, review, 1)
+                for review in candidates
+            ]
+            for future in as_completed(futures):
+                result = future.result()
+                if result:
+                    results.append(result)
+        for grp_store in results :
+            drop_dup.append(grp_store)
+        
     candidates_str = ''
     for d in drop_dup:
         # 가게명

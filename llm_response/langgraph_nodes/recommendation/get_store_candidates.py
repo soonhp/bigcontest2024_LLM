@@ -58,30 +58,22 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_ret
         )
         cypher_result_str = get_cypher_result_to_str(candidates_2nd, query_embedding, graphdb_driver, k=2)
         candidate_str += cypher_result_str
-
+    
     lack_num = CONFIG.recomm_candidates_num - len(candidates_1st)
+    # print("lack_num : ", lack_num)
     if lack_num:
-        review_retrieval = store_retriever_rev_emb.invoke(state['intent'])
-        candidate_str += get_candidate_str(review_retrieval[:lack_num], query_embedding, graphdb_driver, use_unique_k=lack_num, review_k=2)
+        if state['subtype'] == 'purpose_and_visit_with' :
+            review_retrieval = store_retriever_grp_emb.invoke(state['intent'])
+            print("review_retrieval : ", review_retrieval)
+        else : 
+            review_retrieval = store_retriever_rev_emb.invoke(state['intent'])
+            
+        candidate_str += get_candidate_str(review_retrieval[:lack_num], query_embedding, graphdb_driver, use_unique_k=lack_num, state=state['subtype'], review_k=2)
         placeholder.markdown(
             f"> {len(candidates_1st) + len(review_retrieval)}개의 후보 탐색 중...",
             unsafe_allow_html=True,
         )
     
-
-
-    # GraphEmbedding similarity
-    # graph_candidates_lst = []
-    # grp_sim_result = store_retriever_grp_emb.invoke(state['query'])
-    # with ThreadPoolExecutor() as executor:
-    #     futures = [
-    #         executor.submit(process_review_node, review, top_k_reviews=1)
-    #         for review in grp_sim_result
-    #     ]
-    #     for future in as_completed(futures):
-    #         result = future.result()
-    #         if result:
-    #             graph_candidates_lst.append(result)
 
     # Token check
     state["candidate_str"] = token_check(candidate_str, state, llm, placeholder)
