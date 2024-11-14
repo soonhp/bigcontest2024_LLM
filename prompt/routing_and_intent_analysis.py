@@ -30,7 +30,39 @@ USE {{
   UE_CNT_GRP: 이용건수구간. 월별 이용건수를 6개 구간으로 집계 시, 해당 가맹점의 이용건수가 포함되는 분위수 구간. ex)'상위 10% 이하', '10~25%', '25~50%', '50~75%', '75~90%', '90% 초과(하위 10% 이하)'
   UE_AMT_GRP: 이용금액구간. 월별 이용금액을 6개 구간으로 집계 시, 해당 가맹점의 이용금액이 포함되는 분위수 구간. ex)'상위 10% 이하', '10~25%', '25~50%', '50~75%', '75~90%', '90% 초과(하위 10% 이하)'
   UE_AMT_PER_TRSN_GRP: 건당 평균 이용금액 구간. 월별 건당 평균 이용금액을 6개 구간으로 집계 시, 해당 가맹점의 건당 평균 이용금액이 포함되는 분위수 구간. ex)'상위 10% 이하', '10~25%', '25~50%', '50~75%', '75~90%', '90% 초과(하위 10% 이하)'
+  MON_UE_CNT_RAT: 월요일 이용건수 비중. FLOAT. ex) 0.1262
+  TUE_UE_CNT_RAT: 화요일 이용건수 비중. FLOAT. ex) 0.1262
+  WED_UE_CNT_RAT: 수요일 이용건수 비중. FLOAT. ex) 0.1941
+  THU_UE_CNT_RAT: 목요일 이용건수 비중. FLOAT. ex) 0.2233
+  FRI_UE_CNT_RAT: 금요일 이용건수 비중. FLOAT. ex) 0.1553
+  SAT_UE_CNT_RAT: 토요일 이용건수 비중. FLOAT. ex) 0.1747
+  SUN_UE_CNT_RAT: 일요일 이용건수 비중. FLOAT. ex) 0.1818
+  
+  # 시간대별
+  HR_5_11_UE_CNT_RAT: 5시~11시 이용건수 비중. FLOAT. ex) 0.1650
+  HR_12_13_UE_CNT_RAT: 12시~13시 이용건수 비중. FLOAT. ex) 0.5242
+  HR_14_17_UE_CNT_RAT: 14시~17시 이용건수 비중. FLOAT. ex) 0.3107
+  HR_18_22_UE_CNT_RAT: 18시~22시 이용건수 비중. FLOAT. ex) 0.0511
+  HR_23_4_UE_CNT_RAT: 23시~4시 이용건수 비중. FLOAT. ex) 0.07313
+  
+  # 현지인
+  LOCAL_UE_CNT_RAT: 현지인 이용건수 비중. FLOAT. ex) 0.5843
+  
+  # 성별
+  RC_M12_MAL_CUS_CNT_RAT: 남성 이용건수 비중. FLOAT. ex) 0.634
+  RC_M12_FME_CUS_CNT_RAT: 여성 이용건수 비중. FLOAT. ex) 0.366
+  
+  # 연령대별
+  RC_M12_AGE_UND_20_CUS_CNT_RAT: 20대 이하 이용건수 비중. FLOAT. ex) 0.066
+  RC_M12_AGE_30_CUS_CNT_RAT: 30대 이용건수 비중. FLOAT. ex) 0.252
+  RC_M12_AGE_40_CUS_CNT_RAT: 40대 이용건수 비중. FLOAT. ex) 0.398
+  RC_M12_AGE_50_CUS_CNT_RAT: 50대 이용건수 비중. FLOAT. ex) 0.201
+  RC_M12_AGE_OVR_60_CUS_CNT_RAT: 60대 이상 이용건수 비중. FLOAT. ex) 0.083
 }}
+The relationships:
+(:City)-[:HAS_REGION]->(:Region)
+(:REGION)-[:HAS_STORE]->(:STORE)
+(:STORE)-[:USE]->(:MONTH)
 
 - EXAMPLE)
 query : 제주시 한림읍에 있는 카페 중 30대 이용 비중이 가장 높은 곳은?
