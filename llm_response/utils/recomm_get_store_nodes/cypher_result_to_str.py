@@ -57,6 +57,7 @@ def get_candidate_str(candidates, query_embedding, graphdb_driver, subtype, rev_
                 if result:
                     results.append(result)
         for grp_store in results[:grp_num]:
+            print("grp_store : ", grp_store)
             drop_dup.append(grp_store)
         
     candidates_str = ''
@@ -71,20 +72,19 @@ def get_candidate_str(candidates, query_embedding, graphdb_driver, subtype, rev_
             reviews_lst = [f"{ri}. {review['text'][:100]}".strip() for ri, review in enumerate(reviews, start=1)]
             candidates_str += "리뷰 : \n" + '\n'.join(reviews_lst) + "\n"
         # 평점
-        if 'store_Rating' in d.metadata:
-            ratings_lst = []
-            for platform in ['naver', 'kakao', 'google']:
-                if (platform in d.metadata['store_Rating']) and (d.metadata['store_Rating'][platform] is not None):
-                    pf_rating = d.metadata['store_Rating'][platform]
-                else:
-                    continue
-                if platform in d.metadata['reviewCount'] and (d.metadata['reviewCount'][platform] is not None):
-                    pf_rc = d.metadata['reviewCount'][platform]
-                else:
-                    continue
-                ratings_lst.append(f"{platform} {pf_rating}({pf_rc}명)")
-            rating_str = ', '.join(ratings_lst)
-            candidates_str += f"평점 : {rating_str}\n"
+        ratings_lst = []
+        for platform in ['naver', 'kakao', 'google']:
+            if (platform in d.metadata['store_Rating']) and (d.metadata['store_Rating'][platform] is not None):
+                pf_rating = d.metadata['store_Rating'][platform]
+            else:
+                continue
+            if platform in d.metadata['reviewCount'] and (d.metadata['reviewCount'][platform] is not None):
+                pf_rc = d.metadata['reviewCount'][platform]
+            else:
+                continue
+            ratings_lst.append(f"{platform} {pf_rating}({pf_rc}명)")
+        rating_str = ', '.join(ratings_lst)
+        candidates_str += f"평점 : {rating_str}\n"
         # 주소
         if 'store_Addr' in d.metadata:
             candidates_str += f"주소 : {d.metadata['store_Addr']}\n"

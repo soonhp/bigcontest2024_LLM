@@ -10,7 +10,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from graphrag.get_embedding_model import get_embedding_model
 from cypher_query.retrieval_query import retrievalQuery_grpEmb
 from utils import DotDict
-
 # 환경 변수 로드
 load_dotenv()
 first_start_time = time.time()
@@ -46,8 +45,23 @@ def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
     리뷰의 그래프 임베딩과 유사한 top-K STORE 노드를 반환합니다.
     """
     query = """
-    MATCH (s:STORE:GraphEmb)
-    RETURN s.MCT_NM AS simstore, s.pk AS store_pk, gds.similarity.cosine(s.GraphEmbedding, $review_GraphEmbedding) AS similarity
+    MATCH (store:STORE:GraphEmb)
+    RETURN store AS store, 
+           gds.similarity.cosine(store.GraphEmbedding, $review_GraphEmbedding) AS similarity,
+           {
+            pk : store.pk,
+            storeName: store.MCT_NM,
+            store_Type: store.MCT_TYPE,
+            store_Addr: store.ADDR,
+            store_Image: {naver: store.image_url_naver, kakao: store.image_url_kakao, google: store.image_url_google},
+            store_Rating: {naver: store.rating_naver, kakao: store.rating_kakao, google: store.rating_google},
+            reviewCount: {naver: store.rating_count_naver, kakao: store.rating_count_kakao, google: store.rating_count_google},
+            purpose: store.purpose,
+            use_how: store.use_how,
+            viwit_with: store.visit_with,
+            wait_time: store.wait_time,
+            menu : store.menu
+           } AS metadata
     ORDER BY similarity DESC
     LIMIT $k
     """
@@ -55,15 +69,8 @@ def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
         start_time = time.time()
         result = session.run(query, review_GraphEmbedding=review_GraphEmbedding, k=k)
         end_time = time.time()
-        # print(f"Query Execution Time: {end_time - start_time:.4f} seconds")
-        return [
-            {
-                "storeName": record["simstore"], 
-                "pk": record['store_pk'], 
-                "similarity": record["similarity"]
-            } 
-                for record in result
-            ]
+        print(f"Query Execution Time: {end_time - start_time:.4f} seconds")
+        return [record['metadata'] for record in result]
 
 def process_review_node(review_node, top_k_reviews):
     """
@@ -78,6 +85,7 @@ def process_review_node(review_node, top_k_reviews):
     review_GraphEmbedding = review_metadata["graphEmbedding"]
     top_stores = retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, top_k_reviews)
     
+    # return {"review_metadata": review_metadata, "top_stores": top_stores}
     return DotDict({"metadata": top_stores[0]})
 
 def retrieve_store_and_top_reviews(user_query, top_k_reviews=3):
