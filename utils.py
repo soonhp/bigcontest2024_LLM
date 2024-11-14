@@ -27,6 +27,16 @@ def get_ratings_str(d):
     return rating_str
 
 
+class DotDict(dict):
+    """딕셔너리 키를 속성처럼 접근할 수 있도록 하는 클래스"""
+    def __getattr__(self, key):
+        return self.get(key)
+    
+    def __setattr__(self, key, value):
+        self[key] = value
+    
+    def __delattr__(self, key):
+        del self[key]
 
 
 

@@ -9,6 +9,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from graphrag.get_embedding_model import get_embedding_model
 from cypher_query.retrieval_query import retrievalQuery_grpEmb
+from utils import DotDict
 
 # 환경 변수 로드
 load_dotenv()
@@ -54,8 +55,15 @@ def retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, k=2):
         start_time = time.time()
         result = session.run(query, review_GraphEmbedding=review_GraphEmbedding, k=k)
         end_time = time.time()
-        print(f"Query Execution Time: {end_time - start_time:.4f} seconds")
-        return [{"storeName": record["simstore"], "pk": record['store_pk'], "similarity": record["similarity"]} for record in result]
+        # print(f"Query Execution Time: {end_time - start_time:.4f} seconds")
+        return [
+            {
+                "storeName": record["simstore"], 
+                "pk": record['store_pk'], 
+                "similarity": record["similarity"]
+            } 
+                for record in result
+            ]
 
 def process_review_node(review_node, top_k_reviews):
     """
@@ -70,8 +78,7 @@ def process_review_node(review_node, top_k_reviews):
     review_GraphEmbedding = review_metadata["graphEmbedding"]
     top_stores = retrieve_top_k_stores_by_review_graph_embedding(review_GraphEmbedding, top_k_reviews)
     
-    # return {"review_metadata": review_metadata, "top_stores": top_stores}
-    return {"metadata": top_stores}
+    return DotDict({"metadata": top_stores[0]})
 
 def retrieve_store_and_top_reviews(user_query, top_k_reviews=3):
     """

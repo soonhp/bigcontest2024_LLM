@@ -6,7 +6,7 @@ from llm_response.utils.recomm_get_store_nodes.intent_guide import IntentGuide
 from llm_response.utils.recomm_get_store_nodes.t2c import text_to_cypher_for_recomm
 from llm_response.utils.recomm_get_store_nodes.token_check import token_check
 from llm_response.utils.recomm_get_store_nodes.top_similar_stores import retrieve_top_similar_stores_pk
-from llm_response.utils.recomm_get_store_nodes.utils import convert_markdown_to_html
+from llm_response.utils.recomm_get_store_nodes.utils import calculate_numbers, convert_markdown_to_html
 from llm_response.utils.recomm_get_store_nodes.cypher_result_to_str import get_candidate_str, get_cypher_result_to_str
 
 import streamlit as st
@@ -60,19 +60,30 @@ def get_store_candidates(llm, graphdb_driver, store_retriever_rev_emb, store_ret
         candidate_str += cypher_result_str
     
     lack_num = CONFIG.recomm_candidates_num - len(candidates_1st)
-    # print("lack_num : ", lack_num)
-    if lack_num:
-        if state['subtype'] == 'purpose_and_visit_with' :
-            review_retrieval = store_retriever_grp_emb.invoke(state['intent'])
-            print("review_retrieval : ", review_retrieval)
-        else : 
-            review_retrieval = store_retriever_rev_emb.invoke(state['intent'])
-            
-        candidate_str += get_candidate_str(review_retrieval[:lack_num], query_embedding, graphdb_driver, use_unique_k=lack_num, state=state['subtype'], review_k=2)
+    print("lack_num : ", lack_num)
+    if lack_num > 0:
         placeholder.markdown(
-            f"> {len(candidates_1st) + len(review_retrieval)}개의 후보 탐색 중...",
+            f"> {len(candidates_1st) + lack_num}개의 후보 탐색 중...",
             unsafe_allow_html=True,
         )
+        if state['subtype'] == 'purpose_and_visit_with' :
+            review_retrieval = store_retriever_grp_emb.invoke(state['intent'])
+            rev_num, grp_num = calculate_numbers(lack_num)
+        else : 
+            review_retrieval = store_retriever_rev_emb.invoke(state['intent'])
+            rev_num, grp_num = 6, 0
+        
+
+            
+        candidate_str += get_candidate_str(
+            candidates=review_retrieval, 
+            query_embedding=query_embedding, 
+            graphdb_driver=graphdb_driver, 
+            subtype=state['subtype'], 
+            rev_num=rev_num, 
+            grp_num=grp_num, 
+            review_k=2)
+
     
 
     # Token check

@@ -38,14 +38,14 @@ def get_cypher_result_to_str(candidates_2nd, query_embedding, graphdb_driver, k=
     return cypher_result_str
 
 
-def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k, state, review_k):          
+def get_candidate_str(candidates, query_embedding, graphdb_driver, subtype, rev_num, grp_num, review_k):          
     drop_dup = []
     for r in candidates:
-        if len(drop_dup) == use_unique_k:
+        if len(drop_dup) == rev_num:
             break
         if r.metadata['pk'] not in [d.metadata['pk'] for d in drop_dup]:
             drop_dup.append(r)
-    if state == 'purpose_and_visit_with' :
+    if subtype == 'purpose_and_visit_with' :
         results = []
         with ThreadPoolExecutor() as executor:
             futures = [
@@ -56,7 +56,7 @@ def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k,
                 result = future.result()
                 if result:
                     results.append(result)
-        for grp_store in results :
+        for grp_store in results[:grp_num]:
             drop_dup.append(grp_store)
         
     candidates_str = ''
@@ -71,19 +71,20 @@ def get_candidate_str(candidates, query_embedding, graphdb_driver, use_unique_k,
             reviews_lst = [f"{ri}. {review['text'][:100]}".strip() for ri, review in enumerate(reviews, start=1)]
             candidates_str += "리뷰 : \n" + '\n'.join(reviews_lst) + "\n"
         # 평점
-        ratings_lst = []
-        for platform in ['naver', 'kakao', 'google']:
-            if (platform in d.metadata['store_Rating']) and (d.metadata['store_Rating'][platform] is not None):
-                pf_rating = d.metadata['store_Rating'][platform]
-            else:
-                continue
-            if platform in d.metadata['reviewCount'] and (d.metadata['reviewCount'][platform] is not None):
-                pf_rc = d.metadata['reviewCount'][platform]
-            else:
-                continue
-            ratings_lst.append(f"{platform} {pf_rating}({pf_rc}명)")
-        rating_str = ', '.join(ratings_lst)
-        candidates_str += f"평점 : {rating_str}\n"
+        if 'store_Rating' in d.metadata:
+            ratings_lst = []
+            for platform in ['naver', 'kakao', 'google']:
+                if (platform in d.metadata['store_Rating']) and (d.metadata['store_Rating'][platform] is not None):
+                    pf_rating = d.metadata['store_Rating'][platform]
+                else:
+                    continue
+                if platform in d.metadata['reviewCount'] and (d.metadata['reviewCount'][platform] is not None):
+                    pf_rc = d.metadata['reviewCount'][platform]
+                else:
+                    continue
+                ratings_lst.append(f"{platform} {pf_rating}({pf_rc}명)")
+            rating_str = ', '.join(ratings_lst)
+            candidates_str += f"평점 : {rating_str}\n"
         # 주소
         if 'store_Addr' in d.metadata:
             candidates_str += f"주소 : {d.metadata['store_Addr']}\n"
