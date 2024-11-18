@@ -173,5 +173,6 @@ Never use any properties or relationships not included in the schema.
 Never include triple backticks ```.
 Add an appropriate LIMIT clause.
 Do not use STORE.MCT_TYPE and Visit_with.name beyond the provided examples, and try to find the closest match.
+You should include pk value in RETURN.
 
 Cypher query:"""
